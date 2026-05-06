@@ -242,7 +242,7 @@
               <input type="text" id="prenom" name="prenom" placeholder="Prénom" required>
               <input type="text" id="nom" name="nom" placeholder="Nom" required>
               <input type="email" id="email" name="email" class="full" placeholder="Courriel professionnel" required>
-              <input type="tel" id="telephone" name="telephone" class="full" placeholder="Téléphone (optionnel, mais recommandé)">
+              <input type="tel" id="telephone" name="telephone" class="full" placeholder="ex: 514-555-1234" maxlength="14">
             </div>
             <button class="btn-primary" id="lead-submit" type="submit" style="margin-top:14px;" disabled>Recevoir mon analyse personnalisée</button>
             <p class="privacy-note">Vos informations servent uniquement à vous transmettre votre analyse et, si pertinent, à vous proposer un échange de suivi.</p>
@@ -492,6 +492,18 @@
   );
 
   runCalc();
+
+  // Formatage automatique du numéro de téléphone
+  document.getElementById('telephone').addEventListener('input', function(e) {
+    let val = e.target.value.replace(/\D/g, '').substring(0, 10);
+    if (val.length >= 7) {
+      val = val.substring(0,3) + '-' + val.substring(3,6) + '-' + val.substring(6);
+    } else if (val.length >= 4) {
+      val = val.substring(0,3) + '-' + val.substring(3);
+    }
+    e.target.value = val;
+  });
+
 </script>
 </body>
 </html>
