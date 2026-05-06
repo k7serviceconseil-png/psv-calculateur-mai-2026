@@ -427,7 +427,7 @@
       notifyNtfy(
         NTFY_RISK_TOPIC,
         `⚠️ Résultat à risque élevé\n\nExposition totale : ${fmtCA(expositionTotale)}\nCoût direct : ${fmtCA(totalDirect)}\nProfits perdus : ${fmtCA(profitsPerdus)}\nDurée : ${duree} mois\nTaux d'atteinte : ${taux} %\nQuota : ${fmtCA(ventes)}\nMarge : ${marge} %`,
-        '⚠️ Risque élevé détecté',
+        'Risque eleve detecte',
         'high',
         'warning,moneybag'
       );
@@ -471,7 +471,7 @@
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: encodeNetlifyForm(form)
     }).then(function() {
-      notifyNtfy(NTFY_LEAD_TOPIC, leadBody, '🔥 Lead chaud — Calculateur', leadPriority, 'phone,moneybag');
+      notifyNtfy(NTFY_LEAD_TOPIC, leadBody, 'Lead chaud - Calculateur', leadPriority, 'phone,moneybag');
       document.getElementById('success-message').style.display = 'block';
       document.getElementById('success-message').textContent = 'Merci. Votre demande a été reçue. Vous recevrez une lecture personnalisée de votre résultat.';
       btn.textContent = 'Demande reçue';
