@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="shortcut icon" href="/favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur — Coût d'une mauvaise embauche en vente</title>
+<meta name="description" content="Calculez le coût réel d'une mauvaise embauche en vente : salaire, ventes perdues, recrutement, formation et exposition financière totale.">
+<link rel="canonical" href="https://calculateur-couts-embauche.netlify.app/">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f2044; --navy-mid: #1a3260;
+    --accent: #c8a96e; --accent-strong: #BA7517; --accent-light: #e8c98e;
+    --white: #ffffff; --off-white: #f8f6f1;
+    --text: #1c1c1c; --text-muted: #5a6070;
+    --red: #c0392b; --orange: #BA7517; --green: #1a6b4a;
+    --border: rgba(15,32,68,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--off-white); overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 18px 5%; background: rgba(15,32,68,0.97); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(200,169,110,0.2); }
+  .nav-logo { font-family: 'Playfair Display', serif; color: var(--white); font-size: 1.25rem; font-weight: 700; letter-spacing: 0.02em; text-decoration: none; }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a { font-size: 0.88rem; font-weight: 600; color: #ffffff !important; text-decoration: none; letter-spacing: 0.02em; transition: color 0.2s; }
+  .nav-links a:hover { color: #c8a96e !important; }
+  .nav-cta { background: var(--accent); color: var(--navy); padding: 10px 24px; border-radius: 4px; font-weight: 700; font-size: 0.82rem; letter-spacing: 0.05em; text-decoration: none; text-transform: uppercase; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--accent-light); }
+
+  .page-hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 55%, #162d5a 100%); padding: 140px 5% 90px; text-align: center; position: relative; overflow: hidden; }
+  .page-hero::before { content: ''; position: absolute; top: -20%; right: -10%; width: 70vw; height: 70vw; max-width: 900px; background: radial-gradient(circle, rgba(200,169,110,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .hero-badge { display: inline-block; background: rgba(200,169,110,0.15); border: 1px solid rgba(200,169,110,0.4); color: var(--accent); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 14px; border-radius: 20px; margin-bottom: 24px; }
+  .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 3.25rem); color: var(--white); line-height: 1.15; margin-bottom: 20px; font-weight: 900; position: relative; }
+  .page-hero h1 em { color: var(--accent); font-style: normal; }
+  .page-hero p { color: rgba(255,255,255,0.74); font-size: 1.05rem; max-width: 690px; margin: 0 auto; line-height: 1.7; font-weight: 300; position: relative; }
+
+  .calc-section { padding: 70px 5%; background: var(--white); }
+  .container { max-width: 1120px; margin: 0 auto; }
+  .calc-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .section-label { display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-strong); background: rgba(200,169,110,0.1); border: 1px solid rgba(200,169,110,0.25); padding: 5px 12px; border-radius: 20px; margin-bottom: 20px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--navy); line-height: 1.2; margin-bottom: 16px; }
+
+  .sliders-panel { background: var(--off-white); border: 1px solid var(--border); border-radius: 12px; padding: 36px; }
+  .sliders-panel h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--navy); margin-bottom: 28px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .slider-group { margin-bottom: 28px; }
+  .slider-header { display: flex; justify-content: space-between; align-items: baseline; gap: 15px; margin-bottom: 10px; }
+  .slider-label { font-size: 0.93rem; color: var(--text); font-weight: 600; }
+  .slider-value { font-size: 1.05rem; font-weight: 700; color: var(--accent-strong); font-family: 'Playfair Display', serif; white-space: nowrap; }
+  input[type="range"] { width: 100%; accent-color: #BA7517; height: 4px; cursor: pointer; }
+  .slider-hint { font-size: 0.78rem; color: var(--text-muted); margin-top: 6px; line-height: 1.5; }
+
+  .results-panel { display: flex; flex-direction: column; gap: 20px; }
+  .result-total { background: #FFFBF0; border: 2px solid #EF9F27; border-radius: 12px; padding: 32px; text-align: center; }
+  .result-total .result-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #BA7517; margin-bottom: 10px; }
+  .result-total .result-amount { font-family: 'Playfair Display', serif; font-size: clamp(2.55rem, 5vw, 3.3rem); font-weight: 900; color: #BA7517; line-height: 1; margin-bottom: 6px; }
+  .result-total .result-sub { font-size: 0.85rem; color: var(--text-muted); }
+  .result-profits { background: #fdf3f2; border: 1px solid rgba(192,57,43,0.3); border-radius: 12px; padding: 28px; }
+  .result-profits .result-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 10px; }
+  .result-profits .result-amount { font-family: 'Playfair Display', serif; font-size: clamp(2.15rem, 4vw, 2.65rem); font-weight: 900; color: var(--red); line-height: 1; margin-bottom: 8px; }
+  .result-profits .result-sub { font-size: 0.85rem; color: var(--text-muted); }
+  .result-detail { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 28px; }
+  .result-detail h4 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--navy); margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .detail-rows { display: flex; flex-direction: column; gap: 10px; }
+  .detail-row { display: flex; justify-content: space-between; gap: 18px; align-items: center; padding: 10px 14px; background: var(--off-white); border-radius: 6px; }
+  .detail-row .dr-label { font-size: 0.85rem; color: var(--text-muted); }
+  .detail-row .dr-val { font-size: 0.92rem; font-weight: 700; color: var(--navy); white-space: nowrap; }
+
+  .diagnostic-premium { border: 2px solid rgba(186,117,23,0.35); background: linear-gradient(180deg, #fff 0%, #FFFBF0 100%); }
+  .risk-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 14px; }
+  .risk-high { background: rgba(192,57,43,0.12); color: var(--red); border: 1px solid rgba(192,57,43,0.25); }
+  .risk-mid { background: rgba(186,117,23,0.13); color: var(--orange); border: 1px solid rgba(186,117,23,0.25); }
+  .risk-low { background: rgba(26,107,74,0.12); color: var(--green); border: 1px solid rgba(26,107,74,0.25); }
+  .diagnostic-copy { font-size: 0.92rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 12px; }
+
+  .gate-box { background: #FFFBF0; border: 2px solid #EF9F27; border-radius: 12px; padding: 28px; }
+  .gate-box h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--navy); margin-bottom: 10px; }
+  .gate-box p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
+  .gate-list { margin: 0 0 18px 0; padding-left: 0; list-style: none; display: grid; gap: 8px; }
+  .gate-list li { font-size: 0.88rem; color: var(--navy); font-weight: 600; }
+  .gate-list li::before { content: "→"; color: var(--accent-strong); font-weight: 900; margin-right: 8px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .form-grid .full { grid-column: 1 / -1; }
+  .gate-box input { width: 100%; border: 1px solid rgba(15,32,68,0.18); border-radius: 6px; padding: 12px 12px; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; background: #fff; }
+  .gate-box input:focus { outline: 2px solid rgba(186,117,23,0.22); border-color: #BA7517; }
+  .privacy-note { font-size: 0.74rem !important; color: rgba(90,96,112,0.9) !important; margin: 12px 0 0 !important; }
+  .success-message { display: none; background: rgba(26,107,74,0.1); border: 1px solid rgba(26,107,74,0.25); color: var(--green); font-weight: 700; padding: 12px; border-radius: 8px; margin-top: 14px; font-size: 0.88rem; }
+
+  .btn-primary { background: var(--accent); color: var(--navy); padding: 15px 26px; border-radius: 4px; font-weight: 800; font-size: 0.9rem; letter-spacing: 0.04em; text-decoration: none; text-transform: uppercase; transition: all 0.2s; display: inline-block; border: 0; cursor: pointer; width: 100%; }
+  .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,169,110,0.3); }
+  .btn-primary:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  .methodo { padding: 70px 5%; background: var(--navy); }
+  .methodo .section-title { color: var(--white); margin-bottom: 40px; }
+  .methodo-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+  .methodo-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(200,169,110,0.2); border-radius: 10px; padding: 28px; }
+  .methodo-card h4 { color: var(--accent); font-size: 0.88rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px; }
+  .methodo-card p { color: rgba(255,255,255,0.66); font-size: 0.88rem; line-height: 1.65; }
+
+  .cta-final { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); padding: 80px 5%; text-align: center; }
+  .cta-final h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--white); margin-bottom: 14px; }
+  .cta-final h2 em { color: var(--accent); font-style: normal; }
+  .cta-final p { color: rgba(255,255,255,0.65); margin-bottom: 32px; }
+  .cta-final .btn-primary { width: auto; }
+  footer { background: #080f1e; padding: 40px 5%; text-align: center; color: rgba(255,255,255,0.35); font-size: 0.82rem; }
+  footer span { color: var(--accent); }
+  footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  @media (max-width: 900px) {
+    .calc-layout, .methodo-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    nav { padding: 15px 5%; }
+    .nav-logo { font-size: 1.05rem; }
+    .page-hero { padding-top: 125px; }
+    .sliders-panel, .result-detail, .gate-box { padding: 24px; }
+    .form-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Calculateur<span> ·</span> Coût d'embauche</a>
+  <div class="nav-links">
+    <a href="#calculateur">Calculateur</a>
+    <a href="#methodologie">Méthodologie</a>
+    <a href="#analyse">Analyse</a>
+  </div>
+  <a href="#analyse" class="nav-cta">Recevoir l'analyse</a>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-badge">Outil gratuit pour dirigeants et gestionnaires</div>
+  <h1>Combien vous coûte<br><em>une mauvaise embauche en vente ?</em></h1>
+  <p>Estimez votre exposition financière réelle : salaire, avantages sociaux, recrutement, formation, ventes perdues et profits nets évaporés.</p>
+</div>
+
+<section class="calc-section" id="calculateur">
+  <div class="container">
+    <div style="margin-bottom:36px;">
+      <div class="section-label">Calculateur interactif</div>
+      <h2 class="section-title">Votre exposition financière réelle</h2>
+      <p style="color:var(--text-muted);font-size:0.95rem;max-width:680px;line-height:1.7;">Pour obtenir votre diagnostic instantané, ajustez les glissières afin qu’elles représentent votre réalité. Les résultats apparaîtront dès que les données essentielles seront complétées.</p>
+    </div>
+
+    <div class="calc-layout">
+      <div class="sliders-panel">
+        <h3>Paramètres du poste</h3>
+
+        <div class="slider-group">
+          <div class="slider-header"><label class="slider-label">Salaire annuel du poste</label><span class="slider-value" id="v-salaire">0 $</span></div>
+          <input type="range" id="salaire" min="0" max="200000" step="5000" value="0">
+          <div class="slider-hint">Salaire de base, sans les avantages sociaux ni commissions.</div>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header"><label class="slider-label">Durée avant de réaliser l'erreur</label><span class="slider-value" id="v-duree">0 mois</span></div>
+          <input type="range" id="duree" min="0" max="18" step="1" value="0">
+          <div class="slider-hint">Temps requis avant d’identifier, documenter et corriger la mauvaise embauche.</div>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header"><label class="slider-label">Quota de ventes annuel du poste</label><span class="slider-value" id="v-ventes">0 $</span></div>
+          <input type="range" id="ventes" min="0" max="1500000" step="25000" value="0">
+          <div class="slider-hint">Objectif de ventes attendu pour ce poste sur 12 mois.</div>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header"><label class="slider-label">Taux d'atteinte de la mauvaise recrue</label><span class="slider-value" id="v-taux">0 %</span></div>
+          <input type="range" id="taux" min="0" max="80" step="5" value="0">
+          <div class="slider-hint">Pourcentage du quota réellement atteint par la personne.</div>
+        </div>
+
+        <div class="slider-group">
+          <div class="slider-header"><label class="slider-label">Marge bénéficiaire nette</label><span class="slider-value" id="v-marge">0 %</span></div>
+          <input type="range" id="marge" min="0" max="50" step="1" value="0">
+          <div class="slider-hint">Distribution : 3–8 % · Manufacturier : 5–15 % · Services B2B : 15–30 %.</div>
+        </div>
+      </div>
+
+      <div class="results-panel">
+        <div class="result-total">
+          <div class="result-label">Coûts directs totaux</div>
+          <div class="result-amount" id="calc-total">—</div>
+          <div class="result-sub">Salaire · Avantages · Recrutement · Formation · Clients affectés</div>
+        </div>
+
+        <div class="result-profits">
+          <div class="result-label">Profits nets évaporés</div>
+          <div class="result-amount" id="calc-profits">—</div>
+          <div class="result-sub" id="calc-profits-sub">—</div>
+        </div>
+
+        <div class="result-detail">
+          <h4>Détail des coûts directs</h4>
+          <div class="detail-rows">
+            <div class="detail-row"><span class="dr-label">Salaire versé sans retour</span><span class="dr-val" id="bc1">—</span></div>
+            <div class="detail-row"><span class="dr-label">Avantages sociaux estimés</span><span class="dr-val" id="bc2">—</span></div>
+            <div class="detail-row"><span class="dr-label">Recrutement + redémarrage</span><span class="dr-val" id="bc3">—</span></div>
+            <div class="detail-row"><span class="dr-label">Formation + gestion accrue</span><span class="dr-val" id="bc4">—</span></div>
+            <div class="detail-row"><span class="dr-label">Clients affectés / opportunités perdues</span><span class="dr-val" id="bc5">—</span></div>
+          </div>
+          <p style="font-size:0.76rem;color:var(--text-muted);margin-top:12px;line-height:1.5;">Les profits nets évaporés sont calculés séparément : ventes manquées × marge bénéficiaire nette.</p>
+        </div>
+
+        <div class="result-detail diagnostic-premium" id="diagnostic">
+          <h4>Votre diagnostic instantané</h4>
+          <div id="risk-level" class="risk-badge risk-mid">Diagnostic en attente</div>
+          <p id="diagnostic-comment" class="diagnostic-copy">Pour obtenir votre diagnostic instantané, ajustez les glissières afin qu’elles représentent votre réalité.</p>
+          <p id="diagnostic-reco" class="diagnostic-copy" style="font-weight:700;color:var(--navy);">Les résultats et recommandations apparaîtront lorsque les données essentielles seront complétées.</p>
+        </div>
+
+        <div class="gate-box" id="analyse">
+          <h4>Analyse complète non affichée</h4>
+          <p>Recevez une lecture personnalisée de votre résultat, avec les points de vigilance à valider avant votre prochaine décision d’embauche.</p>
+          <ul class="gate-list">
+            <li>Où se situe votre principal risque réel</li>
+            <li>Quelle erreur vous coûte le plus cher</li>
+            <li>Quoi valider avant de signer une offre</li>
+          </ul>
+
+          <form id="lead-form" name="gate-diagnostic" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="gate-diagnostic">
+            <input type="hidden" name="bot-field">
+            <input type="hidden" name="cout_direct" id="form-cout-direct">
+            <input type="hidden" name="profits_perdus" id="form-profits-perdus">
+            <input type="hidden" name="exposition_totale" id="form-exposition">
+            <input type="hidden" name="niveau_risque" id="form-risque">
+            <input type="hidden" name="salaire" id="form-salaire">
+            <input type="hidden" name="duree" id="form-duree">
+            <input type="hidden" name="quota" id="form-quota">
+            <input type="hidden" name="taux_atteinte" id="form-taux">
+            <input type="hidden" name="marge" id="form-marge">
+
+            <div class="form-grid">
+              <input type="text" id="prenom" name="prenom" placeholder="Prénom" required>
+              <input type="text" id="nom" name="nom" placeholder="Nom" required>
+              <input type="email" id="email" name="email" class="full" placeholder="Courriel professionnel" required>
+              <input type="tel" id="telephone" name="telephone" class="full" placeholder="Téléphone (optionnel, mais recommandé)">
+            </div>
+            <button class="btn-primary" id="lead-submit" type="submit" style="margin-top:14px;" disabled>Recevoir mon analyse personnalisée</button>
+            <p class="privacy-note">Vos informations servent uniquement à vous transmettre votre analyse et, si pertinent, à vous proposer un échange de suivi.</p>
+            <div class="success-message" id="success-message">Merci. Votre demande a été reçue. Vous recevrez une lecture personnalisée de votre résultat.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="methodo" id="methodologie">
+  <div class="container">
+    <div class="section-label" style="background:rgba(200,169,110,0.15);border-color:rgba(200,169,110,0.3);">Méthodologie</div>
+    <h2 class="section-title">Comment ces chiffres sont calculés</h2>
+    <div class="methodo-grid">
+      <div class="methodo-card">
+        <h4>Coûts salariaux</h4>
+        <p>Salaire brut proratisé sur la durée, plus une estimation des avantages sociaux et charges associées.</p>
+      </div>
+      <div class="methodo-card">
+        <h4>Remplacement</h4>
+        <p>Temps de recrutement, entrevues, intégration, formation et gestion supplémentaire pendant la période d’ajustement.</p>
+      </div>
+      <div class="methodo-card">
+        <h4>Ventes perdues</h4>
+        <p>Écart entre le quota attendu et le rendement réel, converti en profits nets selon la marge de l’entreprise.</p>
+      </div>
+    </div>
+    <p style="margin-top:28px;font-size:0.82rem;color:rgba(255,255,255,0.38);text-align:center;">Estimations à titre indicatif. Les résultats réels varient selon l’industrie, le cycle de vente, le territoire et le niveau de soutien interne.</p>
+  </div>
+</section>
+
+<section class="cta-final">
+  <div class="container">
+    <h2>Une erreur de recrutement<br><em>ne coûte jamais seulement un salaire.</em></h2>
+    <p>Le chiffre est le point de départ. La vraie valeur est de comprendre où le risque se crée.</p>
+    <a class="btn-primary" href="#analyse">Recevoir mon analyse personnalisée</a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <span>Calculateur du coût d’une mauvaise embauche en vente</span>. Outil d’aide à la décision pour gestionnaires, dirigeants et responsables RH.</p>
+</footer>
+
+<script>
+  const NTFY_OPEN_TOPIC = "https://ntfy.sh/psv-calculateur-ouverture-2026";
+  const NTFY_RISK_TOPIC = "https://ntfy.sh/psv-calculateur-risque-eleve-2026";
+  const NTFY_LEAD_TOPIC = "https://ntfy.sh/psv-calculateur-lead-2026";
+
+  let userInteracted = false;
+  let currentData = {};
+
+  function fmtCA(n) { return Math.round(n).toLocaleString('fr-CA') + ' $'; }
+
+  function encodeNetlifyForm(form) {
+    const formData = new FormData(form);
+    return new URLSearchParams(formData).toString();
+  }
+
+  function notifyNtfy(url, body, title, priority, tags, retry) {
+    retry = retry || 0;
+    fetch('/.netlify/functions/notify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, body, title, priority, tags })
+    }).catch(function() {
+      // Retry uniquement pour les leads (jusqu'à 2 tentatives supplémentaires)
+      if (retry < 2 && url === NTFY_LEAD_TOPIC) {
+        setTimeout(function() { notifyNtfy(url, body, title, priority, tags, retry + 1); }, 3000 * (retry + 1));
+      }
+    });
+  }
+
+  function getDiagnostic(expositionTotale, totalDirect, profitsPerdus, salaire, duree, ventes, taux, marge) {
+    let niveau, cls, diagnostic, recommandation;
+
+    if (expositionTotale >= 100000 || duree >= 9 || taux <= 25) {
+      niveau = "Risque élevé";
+      cls = "risk-high";
+      diagnostic = "Votre scénario indique une exposition financière importante. Le risque ne vient pas seulement du salaire versé, mais aussi du temps perdu, des ventes manquées et du redémarrage complet du recrutement.";
+      recommandation = "Avant de signer une prochaine offre, il serait prudent de renforcer la validation des aptitudes réelles en vente : prospection, gestion des objections, conclusion, autonomie et rigueur commerciale.";
+    } else if (expositionTotale >= 50000 || duree >= 5 || taux <= 50) {
+      niveau = "Risque modéré";
+      cls = "risk-mid";
+      diagnostic = "Votre exposition demeure significative. Une mauvaise embauche peut rapidement absorber plusieurs mois de marge, même lorsque le salaire semble raisonnable.";
+      recommandation = "Votre processus gagnerait à inclure une étape de validation supplémentaire avant l’offre finale, surtout si le candidat doit générer ses propres occasions d’affaires.";
+    } else {
+      niveau = "Risque contrôlé";
+      cls = "risk-low";
+      diagnostic = "Votre exposition semble plus limitée, mais une erreur en vente demeure coûteuse parce qu’elle ralentit la croissance et mobilise inutilement la direction.";
+      recommandation = "Une validation ciblée demeure pertinente si le poste touche des clients stratégiques, un territoire important ou un marché difficile à développer.";
+    }
+
+    if (taux <= 30 && ventes >= 250000) {
+      recommandation += " Dans votre cas, le faible taux d’atteinte du quota est un signal particulièrement important.";
+    } else if (duree >= 8) {
+      recommandation += " Dans votre cas, le délai avant d’intervenir amplifie fortement le coût total.";
+    } else if (salaire >= 100000) {
+      recommandation += " Dans votre cas, le niveau salarial augmente fortement l’exposition dès les premiers mois.";
+    }
+
+    return { niveau, cls, diagnostic, recommandation };
+  }
+
+  function setPendingState() {
+    document.getElementById('calc-total').textContent = '—';
+    document.getElementById('calc-profits').textContent = '—';
+    document.getElementById('calc-profits-sub').textContent = 'Ajustez les glissières pour calculer les ventes perdues et la marge.';
+    ['bc1','bc2','bc3','bc4','bc5'].forEach(function(id){ document.getElementById(id).textContent = '—'; });
+
+    const riskEl = document.getElementById('risk-level');
+    riskEl.className = 'risk-badge risk-mid';
+    riskEl.textContent = 'Diagnostic en attente';
+    document.getElementById('diagnostic-comment').textContent = 'Pour obtenir votre diagnostic instantané, ajustez les glissières afin qu’elles représentent votre réalité.';
+    document.getElementById('diagnostic-reco').textContent = 'Les résultats et recommandations apparaîtront lorsque les données essentielles seront complétées.';
+
+    currentData = { ready: false, salaire: 0, duree: 0, ventes: 0, taux: 0, marge: 0, totalDirect: 0, profitsPerdus: 0, expositionTotale: 0, niveau: 'Diagnostic en attente' };
+    document.getElementById('lead-submit').disabled = true;
+  }
+
+  function runCalc() {
+    const salaire = parseInt(document.getElementById('salaire').value);
+    const duree   = parseInt(document.getElementById('duree').value);
+    const ventes  = parseInt(document.getElementById('ventes').value);
+    const taux    = parseInt(document.getElementById('taux').value);
+    const marge   = parseInt(document.getElementById('marge').value);
+
+    document.getElementById('v-salaire').textContent = salaire.toLocaleString('fr-CA') + ' $';
+    document.getElementById('v-duree').textContent   = duree + ' mois';
+    document.getElementById('v-ventes').textContent  = ventes.toLocaleString('fr-CA') + ' $';
+    document.getElementById('v-taux').textContent    = taux + ' %';
+    document.getElementById('v-marge').textContent   = marge + ' %';
+
+    const hasMinimumData = salaire > 0 && duree > 0 && ventes > 0 && marge > 0;
+    if (!userInteracted || !hasMinimumData) {
+      setPendingState();
+      return;
+    }
+
+    const salaireSansRetour = salaire * (duree / 12);
+    const avantages         = salaireSansRetour * 0.16;
+    const recrutement       = salaire < 60000 ? 7000 : salaire < 100000 ? 10000 : 18000;
+    const formation         = salaire < 60000 ? 6000 : salaire < 100000 ? 9000 : 14000;
+    const ventesPerdues     = ventes * (duree / 12) * (1 - taux / 100);
+    const clientsPerdus     = ventesPerdues * 0.18;
+    const totalDirect       = salaireSansRetour + avantages + recrutement + formation + clientsPerdus;
+    const profitsPerdus     = ventesPerdues * (marge / 100);
+    const expositionTotale  = totalDirect + profitsPerdus;
+
+    document.getElementById('bc1').textContent = fmtCA(salaireSansRetour);
+    document.getElementById('bc2').textContent = fmtCA(avantages);
+    document.getElementById('bc3').textContent = fmtCA(recrutement);
+    document.getElementById('bc4').textContent = fmtCA(formation);
+    document.getElementById('bc5').textContent = fmtCA(clientsPerdus);
+    document.getElementById('calc-total').textContent = fmtCA(totalDirect);
+    document.getElementById('calc-profits').textContent = fmtCA(profitsPerdus);
+    document.getElementById('calc-profits-sub').textContent = fmtCA(ventesPerdues) + ' de ventes perdues × ' + marge + ' % de marge';
+
+    const diag = getDiagnostic(expositionTotale, totalDirect, profitsPerdus, salaire, duree, ventes, taux, marge);
+    const riskEl = document.getElementById('risk-level');
+    riskEl.className = 'risk-badge ' + diag.cls;
+    riskEl.textContent = 'Niveau de risque : ' + diag.niveau;
+    document.getElementById('diagnostic-comment').textContent = diag.diagnostic;
+    document.getElementById('diagnostic-reco').textContent = diag.recommandation;
+
+    currentData = { ready: true, salaire, duree, ventes, taux, marge, totalDirect, profitsPerdus, expositionTotale, niveau: diag.niveau };
+    document.getElementById('lead-submit').disabled = false;
+
+    document.getElementById('form-cout-direct').value = fmtCA(totalDirect);
+    document.getElementById('form-profits-perdus').value = fmtCA(profitsPerdus);
+    document.getElementById('form-exposition').value = fmtCA(expositionTotale);
+    document.getElementById('form-risque').value = diag.niveau;
+    document.getElementById('form-salaire').value = fmtCA(salaire);
+    document.getElementById('form-duree').value = duree + ' mois';
+    document.getElementById('form-quota').value = fmtCA(ventes);
+    document.getElementById('form-taux').value = taux + ' %';
+    document.getElementById('form-marge').value = marge + ' %';
+
+    if (userInteracted && expositionTotale >= 100000 && sessionStorage.getItem('riskNtfySent') !== '1') {
+      clearTimeout(window._riskNtfyTimer);
+      window._riskNtfyTimer = setTimeout(function() {
+        if (currentData.expositionTotale >= 100000 && sessionStorage.getItem('riskNtfySent') !== '1') {
+          sessionStorage.setItem('riskNtfySent', '1');
+          notifyNtfy(
+            NTFY_RISK_TOPIC,
+            `⚠️ Résultat à risque élevé\n\nExposition totale : ${fmtCA(currentData.expositionTotale)}\nCoût direct : ${fmtCA(currentData.totalDirect)}\nProfits perdus : ${fmtCA(currentData.profitsPerdus)}\nDurée : ${currentData.duree} mois\nTaux d'atteinte : ${currentData.taux} %\nQuota : ${fmtCA(currentData.ventes)}\nMarge : ${currentData.marge} %`,
+            '⚠️ Risque élevé détecté',
+            'high',
+            'warning,moneybag'
+          );
+        }
+      }, 3000);
+    } else if (expositionTotale < 100000) {
+      clearTimeout(window._riskNtfyTimer);
+    }
+  }
+
+  document.querySelectorAll('input[type=range]').forEach(function(el) {
+    el.addEventListener('input', function(){ userInteracted = true; runCalc(); });
+  });
+
+  let isSubmitting = false;
+
+  document.getElementById('lead-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (!currentData.ready) {
+      document.getElementById('success-message').style.display = 'block';
+      document.getElementById('success-message').textContent = 'Veuillez ajuster les glissières avant de demander votre analyse personnalisée.';
+      return;
+    }
+
+    // Protection contre double soumission
+    if (isSubmitting) return;
+    isSubmitting = true;
+
+    const form = e.target;
+    const btn = form.querySelector('button');
+    btn.disabled = true;
+
+    const prenom = document.getElementById('prenom').value.trim();
+    const nom = document.getElementById('nom').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const telephone = document.getElementById('telephone').value.trim();
+
+    // Priorité ntfy adaptée selon le niveau de risque
+    const leadPriority = currentData.niveau === 'Risque élevé' ? 'urgent' : currentData.niveau === 'Risque modéré' ? 'high' : 'default';
+    const leadBody = `🔥 Lead chaud — Calculateur\n\nNom : ${prenom} ${nom}\nCourriel : ${email}\nTéléphone : ${telephone || 'Non fourni'}\n\nRisque : ${currentData.niveau}\nCoût direct : ${fmtCA(currentData.totalDirect)}\nProfits perdus : ${fmtCA(currentData.profitsPerdus)}\nExposition totale : ${fmtCA(currentData.expositionTotale)}\n\nSalaire : ${fmtCA(currentData.salaire)}\nDurée : ${currentData.duree} mois\nQuota : ${fmtCA(currentData.ventes)}\nTaux : ${currentData.taux} %\nMarge : ${currentData.marge} %`;
+
+    // Netlify d'abord — ntfy seulement si Netlify réussit
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: encodeNetlifyForm(form)
+    }).then(function() {
+      notifyNtfy(NTFY_LEAD_TOPIC, leadBody, '🔥 Lead chaud — Calculateur', leadPriority, 'phone,moneybag');
+      document.getElementById('success-message').style.display = 'block';
+      document.getElementById('success-message').textContent = 'Merci. Votre demande a été reçue. Vous recevrez une lecture personnalisée de votre résultat.';
+      btn.textContent = 'Demande reçue';
+    }).catch(function() {
+      document.getElementById('success-message').style.display = 'block';
+      document.getElementById('success-message').textContent = 'Une erreur est survenue. Veuillez réessayer.';
+      btn.disabled = false;
+      isSubmitting = false;
+    });
+  });
+
+  notifyNtfy(
+    NTFY_OPEN_TOPIC,
+    "👀 Ouverture du calculateur — simple visite",
+    "Calculateur ouvert",
+    "low",
+    "eyes"
+  );
+
+  runCalc();
+</script>
+</body>
+</html>
