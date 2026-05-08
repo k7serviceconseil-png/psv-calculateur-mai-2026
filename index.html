@@ -423,14 +423,21 @@
     document.getElementById('form-marge').value = marge + ' %';
 
     if (userInteracted && expositionTotale >= 100000 && !window._riskNtfySent) {
-      window._riskNtfySent = true;
-      notifyNtfy(
-        NTFY_RISK_TOPIC,
-        `⚠️ Résultat à risque élevé\n\nExposition totale : ${fmtCA(expositionTotale)}\nCoût direct : ${fmtCA(totalDirect)}\nProfits perdus : ${fmtCA(profitsPerdus)}\nDurée : ${duree} mois\nTaux d'atteinte : ${taux} %\nQuota : ${fmtCA(ventes)}\nMarge : ${marge} %`,
-        'Risque eleve detecte',
-        'high',
-        'warning,moneybag'
-      );
+      clearTimeout(window._riskNtfyTimer);
+      window._riskNtfyTimer = setTimeout(function() {
+        if (currentData.expositionTotale >= 100000 && !window._riskNtfySent) {
+          window._riskNtfySent = true;
+          notifyNtfy(
+            NTFY_RISK_TOPIC,
+            `⚠️ Résultat à risque élevé\n\nExposition totale : ${fmtCA(currentData.expositionTotale)}\nCoût direct : ${fmtCA(currentData.totalDirect)}\nProfits perdus : ${fmtCA(currentData.profitsPerdus)}\nDurée : ${currentData.duree} mois\nTaux d'atteinte : ${currentData.taux} %\nQuota : ${fmtCA(currentData.ventes)}\nMarge : ${currentData.marge} %`,
+            'Risque eleve detecte',
+            'high',
+            'warning,moneybag'
+          );
+        }
+      }, 5000);
+    } else if (expositionTotale < 100000) {
+      clearTimeout(window._riskNtfyTimer);
     }
   }
 
@@ -483,13 +490,22 @@
     });
   });
 
-  notifyNtfy(
-    NTFY_OPEN_TOPIC,
-    "👀 Ouverture du calculateur — simple visite",
-    "Calculateur ouvert",
-    "low",
-    "eyes"
-  );
+  // Alarme ouverture déclenchée à la première interaction (compatible Safari/iPhone)
+  window._openNtfySent = false;
+  document.querySelectorAll('input[type=range]').forEach(function(el) {
+    el.addEventListener('input', function() {
+      if (!window._openNtfySent) {
+        window._openNtfySent = true;
+        notifyNtfy(
+          NTFY_OPEN_TOPIC,
+          "👀 Ouverture du calculateur — simple visite",
+          "Calculateur ouvert",
+          "low",
+          "eyes"
+        );
+      }
+    }, { once: false });
+  });
 
   runCalc();
 
