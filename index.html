@@ -254,6 +254,12 @@
       margin-bottom:20px;
     }
 
+    .profit-card{
+      background:#1a2448;
+      border:2px solid rgba(210,177,111,.42);
+      box-shadow:0 18px 38px rgba(0,0,0,.18);
+    }
+
     .result-label{
       color:#d2b16f;
       font-size:14px;
@@ -373,6 +379,51 @@
       margin-top:14px;
       color:#d2b16f;
       font-weight:700;
+    }
+
+    .methodology{
+      margin-top:32px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(210,177,111,.22);
+      border-radius:18px;
+      padding:28px;
+    }
+
+    .methodology h3{
+      color:#d2b16f;
+      font-size:26px;
+      margin-bottom:12px;
+    }
+
+    .methodology p{
+      color:rgba(255,255,255,.74);
+      font-size:16px;
+      margin-bottom:16px;
+    }
+
+    .methodology-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:16px;
+      margin-top:20px;
+    }
+
+    .methodology-card{
+      background:rgba(255,255,255,.04);
+      border-radius:14px;
+      padding:18px;
+    }
+
+    .methodology-card strong{
+      display:block;
+      color:#d2b16f;
+      margin-bottom:8px;
+      font-size:17px;
+    }
+
+    .methodology-card span{
+      color:rgba(255,255,255,.72);
+      font-size:15px;
     }
 
     footer{
@@ -571,6 +622,12 @@
           <div class="result-note" id="diagnostic">Ajustez les paramètres pour obtenir votre diagnostic.</div>
         </div>
 
+        <div class="result-card profit-card">
+          <div class="result-label">PROFITS NETS ÉVAPORÉS</div>
+          <div class="result-amount" id="lostProfitBox">—</div>
+          <div class="result-note" id="lostProfitNote">Ajustez les paramètres pour calculer les profits perdus.</div>
+        </div>
+
         <div class="details">
           <div class="detail-row">
             <span>Coûts directs estimés</span>
@@ -617,6 +674,31 @@
             <button id="leadButton" type="submit" disabled>Recevoir mon analyse</button>
             <div class="success" id="successMessage">Merci. Votre demande a été reçue.</div>
           </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="methodology">
+      <h3>Méthodologie</h3>
+      <p>
+        Ce calculateur est inspiré de constats publiés par Harvard Business Review sur les coûts visibles et invisibles associés aux erreurs d’embauche, à la sous-performance et au remplacement d’employés. Les résultats demeurent des estimations indicatives et doivent être adaptés à votre réalité.
+      </p>
+      <div class="methodology-grid">
+        <div class="methodology-card">
+          <strong>Coûts directs</strong>
+          <span>Salaire proratisé selon la durée, avantages sociaux estimés, remplacement et formation.</span>
+        </div>
+        <div class="methodology-card">
+          <strong>Ventes perdues</strong>
+          <span>Objectif annuel × durée avant intervention × écart de performance.</span>
+        </div>
+        <div class="methodology-card">
+          <strong>Profits nets évaporés</strong>
+          <span>Ventes perdues × marge bénéficiaire nette.</span>
+        </div>
+        <div class="methodology-card">
+          <strong>Coût total estimé</strong>
+          <span>Coûts directs + profits nets évaporés.</span>
         </div>
       </div>
     </div>
@@ -697,6 +779,8 @@
   function resetResults(){
     document.getElementById('result').textContent = '—';
     document.getElementById('diagnostic').textContent = 'Ajustez les paramètres pour obtenir votre diagnostic.';
+    document.getElementById('lostProfitBox').textContent = '—';
+    document.getElementById('lostProfitNote').textContent = 'Ajustez les paramètres pour calculer les profits perdus.';
     document.getElementById('directCost').textContent = '—';
     document.getElementById('lostSales').textContent = '—';
     document.getElementById('lostProfit').textContent = '—';
@@ -731,6 +815,8 @@
 
     document.getElementById('result').textContent = money(values.total);
     document.getElementById('diagnostic').textContent = values.diagnostic;
+    document.getElementById('lostProfitBox').textContent = money(values.lostProfit);
+    document.getElementById('lostProfitNote').textContent = money(values.lostSales) + ' de ventes perdues × ' + inputs.margin + ' % de marge';
     document.getElementById('directCost').textContent = money(values.directCost);
     document.getElementById('lostSales').textContent = money(values.lostSales);
     document.getElementById('lostProfit').textContent = money(values.lostProfit);
@@ -763,8 +849,8 @@
       const riskMessage = `⚠️ Risque élevé détecté — Calculateur PSV
 
 Coût estimé : ${money(values.total)}
+Profits nets évaporés : ${money(values.lostProfit)}
 Ventes perdues : ${money(values.lostSales)}
-Profits perdus : ${money(values.lostProfit)}
 Durée : ${inputs.months} mois
 Performance : ${inputs.performance} %`;
       sendNtfy(NTFY_RISK, riskMessage);
@@ -795,8 +881,8 @@ Téléphone : ${phone || 'Non fourni'}
 
 Risque : ${currentResult.risk}
 Coût estimé : ${money(currentResult.total)}
-Ventes perdues : ${money(currentResult.lostSales)}
-Profits perdus : ${money(currentResult.lostProfit)}`;
+Profits nets évaporés : ${money(currentResult.lostProfit)}
+Ventes perdues : ${money(currentResult.lostSales)}`;
 
     sendNtfy(NTFY_LEAD, leadMessage);
 
@@ -812,7 +898,8 @@ Profits perdus : ${money(currentResult.lostProfit)}`;
     const sample = calculateValues({salary:100000, months:6, sales:1000000, performance:50, margin:10});
     console.assert(sample.total > 0, 'Test 2 échoué : le total doit être supérieur à zéro.');
     console.assert(sample.lostSales === 250000, 'Test 3 échoué : ventes perdues attendues = 250000.');
-    console.assert(sample.risk === 'Risque élevé' || sample.risk === 'Risque modéré' || sample.risk === 'Risque contrôlé', 'Test 4 échoué : niveau de risque invalide.');
+    console.assert(sample.lostProfit === 25000, 'Test 4 échoué : profits perdus attendus = 25000.');
+    console.assert(sample.risk === 'Risque élevé' || sample.risk === 'Risque modéré' || sample.risk === 'Risque contrôlé', 'Test 5 échoué : niveau de risque invalide.');
   }
 
   runSelfTests();
