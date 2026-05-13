@@ -1,34 +1,304 @@
 <!DOCTYPE html>
 <html lang="fr-CA">
 <head>
-<meta charset="UTF-8">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="shortcut icon" href="/favicon.svg">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculateur PSV — Coût d’un vendeur sous-performant</title>
-<meta name="description" content="Calculez le coût réel d’un vendeur sous-performant : salaire, remplacement, formation, ventes perdues, marge et exposition financière totale.">
-<link rel="canonical" href="https://psv-global.com/calculateur/">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<style>
-:root{--navy:#0f2044;--navy-mid:#1a3260;--accent:#c8a96e;--accent-strong:#BA7517;--accent-light:#e8c98e;--white:#fff;--off-white:#f8f6f1;--text:#1c1c1c;--text-muted:#5a6070;--red:#c0392b;--orange:#BA7517;--green:#1a6b4a;--border:rgba(15,32,68,.12);--soft-blue:#eef3fb;--shadow:0 18px 45px rgba(15,32,68,.12)}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:'DM Sans',Aptos,Arial,sans-serif;color:var(--text);background:var(--off-white);overflow-x:hidden;line-height:1.65}a{text-decoration:none;color:inherit}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 5%;background:rgba(15,32,68,.97);backdrop-filter:blur(8px);border-bottom:1px solid rgba(200,169,110,.2)}
-.nav-logo{font-family:'Playfair Display',Georgia,serif;color:#fff!important;font-size:1.4rem;font-weight:700;letter-spacing:.04em}.nav-logo span{color:var(--accent)}.nav-links{display:flex;gap:28px;align-items:center}.nav-links a{font-size:.88rem;font-weight:600;color:#fff!important;letter-spacing:.02em;transition:color .2s}.nav-links a:hover{color:var(--accent)!important}.nav-cta{background:var(--accent);color:var(--navy)!important;padding:10px 24px;border-radius:4px;font-weight:800;font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;transition:background .2s,transform .2s}.nav-cta:hover{background:var(--accent-light);transform:translateY(-1px)}
-.page-hero{background:radial-gradient(circle at top right,rgba(200,169,110,.12),transparent 32%),linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 55%,#162d5a 100%);padding:150px 5% 90px;text-align:center;position:relative;overflow:hidden;color:var(--white)}.page-hero:before{content:'';position:absolute;top:-20%;right:-10%;width:70vw;height:70vw;max-width:900px;background:radial-gradient(circle,rgba(200,169,110,.08) 0%,transparent 70%);border-radius:50%}.hero-inner{position:relative;max-width:980px;margin:0 auto}.hero-badge{display:inline-block;background:rgba(200,169,110,.15);border:1px solid rgba(200,169,110,.4);color:var(--accent);font-size:.75rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:7px 15px;border-radius:20px;margin-bottom:24px}.page-hero h1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(2.5rem,5vw,4.5rem);color:#fff;line-height:1.05;margin-bottom:22px;font-weight:900;letter-spacing:-.04em}.page-hero h1 em{color:var(--accent);font-style:normal}.page-hero p{color:rgba(255,255,255,.78);font-size:1.12rem;max-width:790px;margin:0 auto 34px;line-height:1.8;font-weight:300}.hero-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:14px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:15px 30px;border-radius:4px;font-weight:800;font-size:.9rem;letter-spacing:.04em;text-transform:uppercase;transition:all .2s}.btn-primary{background:var(--accent);color:var(--navy);border:0;cursor:pointer;box-shadow:0 14px 28px rgba(200,169,110,.25)}.btn-primary:hover{background:var(--accent-light);transform:translateY(-2px)}.btn-secondary{border:1px solid rgba(255,255,255,.28);color:#fff;background:rgba(255,255,255,.06)}.btn-secondary:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-2px)}
-.intro-section{padding:72px 5%;background:#fff}.container{max-width:1120px;margin:0 auto}.section-label{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-strong);background:rgba(200,169,110,.1);border:1px solid rgba(200,169,110,.25);padding:6px 13px;border-radius:20px;margin-bottom:20px}.section-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(2rem,4vw,3rem);color:var(--navy);line-height:1.12;margin-bottom:18px;letter-spacing:-.03em}.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:34px}.intro-card{background:var(--off-white);border:1px solid var(--border);border-radius:16px;padding:28px}.intro-card h3{font-family:'Playfair Display',Georgia,serif;color:var(--navy);font-size:1.3rem;margin-bottom:12px}.intro-card p{color:var(--text-muted)}
-.calc-section{padding:70px 5%;background:#fff}.calc-layout{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}.sliders-panel{background:var(--off-white);border:1px solid var(--border);border-radius:12px;padding:36px}.sliders-panel h3{font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;color:var(--navy);margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--border)}.slider-group{margin-bottom:28px}.slider-header{display:flex;justify-content:space-between;align-items:baseline;gap:15px;margin-bottom:10px}.slider-label{font-size:.93rem;color:var(--text);font-weight:700}.slider-value{font-size:1.05rem;font-weight:800;color:var(--accent-strong);font-family:'Playfair Display',Georgia,serif;white-space:nowrap}input[type=range]{width:100%;accent-color:#BA7517;height:4px;cursor:pointer}.slider-hint{font-size:.78rem;color:var(--text-muted);margin-top:6px;line-height:1.5}.results-panel{display:flex;flex-direction:column;gap:20px}.result-total{background:#FFFBF0;border:2px solid #EF9F27;border-radius:12px;padding:32px;text-align:center}.result-total .result-label{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#BA7517;margin-bottom:10px}.result-total .result-amount{font-family:'Playfair Display',Georgia,serif;font-size:clamp(2.55rem,5vw,3.3rem);font-weight:900;color:#BA7517;line-height:1;margin-bottom:6px}.result-total .result-sub{font-size:.85rem;color:var(--text-muted)}.result-profits{background:#fdf3f2;border:1px solid rgba(192,57,43,.3);border-radius:12px;padding:28px}.result-profits .result-label{font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--red);margin-bottom:10px}.result-profits .result-amount{font-family:'Playfair Display',Georgia,serif;font-size:clamp(2.15rem,4vw,2.65rem);font-weight:900;color:var(--red);line-height:1;margin-bottom:8px}.result-profits .result-sub{font-size:.85rem;color:var(--text-muted)}.result-detail{background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px}.result-detail h4{font-family:'Playfair Display',Georgia,serif;font-size:1.1rem;color:var(--navy);margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border)}.detail-rows{display:flex;flex-direction:column;gap:10px}.detail-row{display:flex;justify-content:space-between;gap:18px;align-items:center;padding:10px 14px;background:var(--off-white);border-radius:6px}.detail-row .dr-label{font-size:.85rem;color:var(--text-muted)}.detail-row .dr-val{font-size:.92rem;font-weight:800;color:var(--navy);white-space:nowrap}.diagnostic-premium{border:2px solid rgba(186,117,23,.35);background:linear-gradient(180deg,#fff 0%,#FFFBF0 100%)}.risk-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;font-size:.82rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px}.risk-high{background:rgba(192,57,43,.12);color:var(--red);border:1px solid rgba(192,57,43,.25)}.risk-mid{background:rgba(186,117,23,.13);color:var(--orange);border:1px solid rgba(186,117,23,.25)}.risk-low{background:rgba(26,107,74,.12);color:var(--green);border:1px solid rgba(26,107,74,.25)}.diagnostic-copy{font-size:.92rem;color:var(--text-muted);line-height:1.65;margin-bottom:12px}.gate-box{background:#FFFBF0;border:2px solid #EF9F27;border-radius:12px;padding:28px}.gate-box h4{font-family:'Playfair Display',Georgia,serif;font-size:1.2rem;color:var(--navy);margin-bottom:10px}.gate-box p{font-size:.9rem;color:var(--text-muted);line-height:1.6;margin-bottom:16px}.gate-list{margin:0 0 18px 0;padding-left:0;list-style:none;display:grid;gap:8px}.gate-list li{font-size:.88rem;color:var(--navy);font-weight:700}.gate-list li:before{content:'→';color:var(--accent-strong);font-weight:900;margin-right:8px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.form-grid .full{grid-column:1/-1}.gate-box input{width:100%;border:1px solid rgba(15,32,68,.18);border-radius:6px;padding:12px;font-family:'DM Sans',sans-serif;font-size:.92rem;background:#fff}.gate-box input:focus{outline:2px solid rgba(186,117,23,.22);border-color:#BA7517}.privacy-note{font-size:.74rem!important;color:rgba(90,96,112,.9)!important;margin:12px 0 0!important}.success-message{display:none;background:rgba(26,107,74,.1);border:1px solid rgba(26,107,74,.25);color:var(--green);font-weight:700;padding:12px;border-radius:8px;margin-top:14px;font-size:.88rem}button.btn-primary{width:100%}button.btn-primary:disabled{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
-.strategic-section{padding:70px 5%;background:var(--soft-blue)}.strategic-box-wide{background:#fff;border-left:5px solid var(--accent);border-radius:18px;padding:34px;box-shadow:0 8px 30px rgba(15,32,68,.06)}.strategic-box-wide h2{font-family:'Playfair Display',Georgia,serif;color:var(--navy);font-size:clamp(1.8rem,3vw,2.5rem);margin-bottom:16px}.strategic-box-wide p{color:var(--text-muted);margin-bottom:14px}.strategic-box-wide ul{margin:18px 0 24px 22px;color:var(--text-muted)}.strategic-box-wide li{margin-bottom:8px}.methodo{padding:70px 5%;background:var(--navy)}.methodo .section-title{color:#fff;margin-bottom:40px}.methodo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}.methodo-card{background:rgba(255,255,255,.05);border:1px solid rgba(200,169,110,.2);border-radius:10px;padding:28px}.methodo-card h4{color:var(--accent);font-size:.88rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}.methodo-card p{color:rgba(255,255,255,.66);font-size:.88rem;line-height:1.65}.cta-final{background:linear-gradient(135deg,var(--navy),var(--navy-mid));padding:80px 5%;text-align:center}.cta-final h2{font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.9rem,4vw,2.8rem);color:#fff;margin-bottom:14px}.cta-final h2 em{color:var(--accent);font-style:normal}.cta-final p{color:rgba(255,255,255,.68);margin:0 auto 32px;max-width:760px}.cta-final .btn-primary{width:auto}footer{background:#080f1e;padding:40px 5%;text-align:center;color:rgba(255,255,255,.35);font-size:.82rem}footer span{color:var(--accent)}@media(max-width:900px){.calc-layout,.methodo-grid,.intro-grid{grid-template-columns:1fr}}@media(max-width:768px){.nav-links{display:none}nav{padding:15px 5%}.nav-logo{font-size:1.05rem}.page-hero{padding-top:125px}.sliders-panel,.result-detail,.gate-box{padding:24px}.form-grid{grid-template-columns:1fr}.hero-actions{flex-direction:column}.btn{width:100%}}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PSV – Calculateur de performance des ventes</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      background:#081d49;
+      color:white;
+      line-height:1.5;
+    }
+
+    header{
+      background:#0a235c;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      padding:22px 60px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .logo{
+      font-size:18px;
+      font-weight:700;
+      letter-spacing:.5px;
+    }
+
+    .cta{
+      background:#d2b16f;
+      color:#081d49;
+      text-decoration:none;
+      padding:14px 26px;
+      border-radius:6px;
+      font-weight:700;
+      transition:.2s;
+    }
+
+    .cta:hover{
+      opacity:.9;
+    }
+
+    .hero{
+      max-width:1200px;
+      margin:auto;
+      padding:90px 60px 70px;
+    }
+
+    .tag{
+      display:inline-block;
+      border:1px solid rgba(210,177,111,.4);
+      padding:10px 20px;
+      border-radius:40px;
+      color:#d2b16f;
+      font-size:14px;
+      letter-spacing:4px;
+      margin-bottom:30px;
+      font-weight:700;
+    }
+
+    h1{
+      font-size:68px;
+      line-height:1.05;
+      max-width:900px;
+      margin-bottom:30px;
+    }
+
+    h1 span{
+      color:#d2b16f;
+    }
+
+    .subtitle{
+      font-size:28px;
+      color:rgba(255,255,255,.75);
+      max-width:900px;
+      margin-bottom:50px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:24px;
+      margin-top:40px;
+    }
+
+    .card{
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius:18px;
+      padding:32px;
+    }
+
+    .card h3{
+      font-size:22px;
+      margin-bottom:18px;
+      color:#d2b16f;
+    }
+
+    .card p{
+      color:rgba(255,255,255,.78);
+      font-size:18px;
+    }
+
+    .section{
+      max-width:1200px;
+      margin:auto;
+      padding:20px 60px 100px;
+    }
+
+    .section-title{
+      font-size:52px;
+      line-height:1.1;
+      margin-bottom:50px;
+    }
+
+    .section-title span{
+      color:#ff5b5b;
+    }
+
+    .benefits{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:24px;
+    }
+
+    .benefit{
+      background:#102b63;
+      border-radius:18px;
+      padding:30px;
+    }
+
+    .benefit strong{
+      display:block;
+      margin-bottom:12px;
+      color:#d2b16f;
+      font-size:22px;
+    }
+
+    .benefit p{
+      color:rgba(255,255,255,.78);
+      font-size:18px;
+    }
+
+    .bottom-cta{
+      text-align:center;
+      margin-top:80px;
+    }
+
+    .bottom-cta a{
+      display:inline-block;
+      background:#d2b16f;
+      color:#081d49;
+      text-decoration:none;
+      padding:18px 42px;
+      border-radius:10px;
+      font-size:20px;
+      font-weight:700;
+    }
+
+    footer{
+      padding:40px;
+      text-align:center;
+      color:rgba(255,255,255,.45);
+      font-size:14px;
+    }
+
+    @media(max-width:768px){
+
+      header{
+        padding:20px;
+      }
+
+      .hero,
+      .section{
+        padding:60px 24px;
+      }
+
+      h1{
+        font-size:44px;
+      }
+
+      .subtitle{
+        font-size:22px;
+      }
+
+      .section-title{
+        font-size:38px;
+      }
+    }
+
+  </style>
 </head>
+
 <body>
-<nav><a href="/" class="nav-logo">PSV<span> ·</span> Profil de Succès en Vente</a><div class="nav-links"><a href="/a-propos/">À propos</a><a href="/blog/">Blog</a><a href="/guides/">Guides</a><a href="/calculateur/">Calculateur</a></div><a href="/commande/" class="nav-cta">Évaluer un vendeur</a></nav>
-<header class="page-hero"><div class="hero-inner"><div class="hero-badge">Calculateur gratuit pour dirigeants et gestionnaires</div><h1>Combien vous coûte réellement un <em>vendeur sous-performant ?</em></h1><p>Un représentant qui plafonne, évite la prospection ou n’atteint pas ses objectifs peut coûter beaucoup plus cher qu’il n’y paraît. Estimez votre exposition financière réelle : salaire, remplacement, formation, temps de gestion, ventes perdues et profits nets évaporés.</p><div class="hero-actions"><a href="#calculateur" class="btn btn-primary">Utiliser le calculateur</a><a href="/comment-fonctionne-le-psv/" class="btn btn-secondary">Comprendre le PSV</a></div></div></header>
-<section class="intro-section"><div class="container"><div class="section-label">Le vrai coût</div><h2 class="section-title">Ce n’est pas seulement du salaire. C’est bien plus que ça.</h2><p style="color:var(--text-muted);font-size:1.05rem;max-width:780px;line-height:1.8">Plusieurs entreprises mesurent le salaire, mais oublient souvent les impacts invisibles : perte de ventes, clients moins suivis, occasions manquées, temps de gestion, formation, remplacement et ralentissement du territoire.</p><div class="intro-grid"><div class="intro-card"><h3>Le coût du remplacement</h3><p>Recruter, intégrer et former un nouveau représentant mobilise du temps, de l’argent et ralentit souvent la continuité commerciale.</p></div><div class="intro-card"><h3>L’impact de la sous-performance</h3><p>Un vendeur qui plafonne ou qui ne prospecte pas assez peut laisser des ventes et des clients sans suivi pendant plusieurs mois.</p></div></div></div></section>
-<section class="calc-section" id="calculateur"><div class="container"><div style="margin-bottom:36px"><div class="section-label">Calculateur interactif</div><h2 class="section-title">Votre exposition financière réelle</h2><p style="color:var(--text-muted);font-size:.95rem;max-width:720px;line-height:1.7">Ajustez les glissières afin qu’elles représentent votre réalité. Les résultats apparaîtront dès que les données essentielles seront complétées.</p></div><div class="calc-layout"><div class="sliders-panel"><h3>Paramètres du représentant</h3><div class="slider-group"><div class="slider-header"><label class="slider-label">Salaire annuel du représentant</label><span class="slider-value" id="v-salaire">0 $</span></div><input type="range" id="salaire" min="0" max="200000" step="5000" value="0"><div class="slider-hint">Salaire de base, sans les avantages sociaux ni commissions.</div></div><div class="slider-group"><div class="slider-header"><label class="slider-label">Temps avant intervention ou remplacement</label><span class="slider-value" id="v-duree">0 mois</span></div><input type="range" id="duree" min="0" max="18" step="1" value="0"><div class="slider-hint">Temps écoulé avant d’intervenir, de corriger la situation ou d’envisager un remplacement.</div></div><div class="slider-group"><div class="slider-header"><label class="slider-label">Objectif de ventes annuel du poste</label><span class="slider-value" id="v-ventes">0 $</span></div><input type="range" id="ventes" min="0" max="1500000" step="25000" value="0"><div class="slider-hint">Objectif annuel attendu pour ce poste ou ce territoire.</div></div><div class="slider-group"><div class="slider-header"><label class="slider-label">% des objectifs réellement atteints</label><span class="slider-value" id="v-taux">0 %</span></div><input type="range" id="taux" min="0" max="80" step="5" value="0"><div class="slider-hint">Pourcentage du quota réellement atteint par le représentant.</div></div><div class="slider-group"><div class="slider-header"><label class="slider-label">Marge bénéficiaire nette</label><span class="slider-value" id="v-marge">0 %</span></div><input type="range" id="marge" min="0" max="50" step="1" value="0"><div class="slider-hint">Distribution : 3–8 % · Manufacturier : 5–15 % · Services B2B : 15–30 %.</div></div></div><div class="results-panel"><div class="result-total"><div class="result-label">Coûts directs estimés</div><div class="result-amount" id="calc-total">—</div><div class="result-sub">Salaire · Avantages · Remplacement · Formation · Opportunités affectées</div></div><div class="result-profits"><div class="result-label">Profits nets évaporés</div><div class="result-amount" id="calc-profits">—</div><div class="result-sub" id="calc-profits-sub">—</div></div><div class="result-detail"><h4>Détail des coûts directs</h4><div class="detail-rows"><div class="detail-row"><span class="dr-label">Salaire versé sans retour suffisant</span><span class="dr-val" id="bc1">—</span></div><div class="detail-row"><span class="dr-label">Avantages sociaux estimés</span><span class="dr-val" id="bc2">—</span></div><div class="detail-row"><span class="dr-label">Remplacement + redémarrage</span><span class="dr-val" id="bc3">—</span></div><div class="detail-row"><span class="dr-label">Formation + gestion accrue</span><span class="dr-val" id="bc4">—</span></div><div class="detail-row"><span class="dr-label">Clients affectés / opportunités perdues</span><span class="dr-val" id="bc5">—</span></div></div><p style="font-size:.76rem;color:var(--text-muted);margin-top:12px;line-height:1.5">Les profits nets évaporés sont calculés séparément : ventes manquées × marge bénéficiaire nette.</p></div><div class="result-detail diagnostic-premium" id="diagnostic"><h4>Votre diagnostic instantané</h4><div id="risk-level" class="risk-badge risk-mid">Diagnostic en attente</div><p id="diagnostic-comment" class="diagnostic-copy">Pour obtenir votre diagnostic instantané, ajustez les glissières afin qu’elles représentent votre réalité.</p><p id="diagnostic-reco" class="diagnostic-copy" style="font-weight:700;color:var(--navy)">Les résultats et recommandations apparaîtront lorsque les données essentielles seront complétées.</p></div><div class="gate-box" id="analyse"><h4>Analyse complète non affichée</h4><p>Recevez une lecture personnalisée de votre résultat, avec les points de vigilance à valider avant votre prochaine décision de coaching, de remplacement ou d’embauche.</p><ul class="gate-list"><li>Où se situe votre principal risque réel</li><li>Quelle dimension vous coûte le plus cher</li><li>Quoi valider avant de remplacer ou recruter</li></ul><form id="lead-form" name="gate-diagnostic" method="POST" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="gate-diagnostic"><input type="hidden" name="bot-field"><input type="hidden" name="cout_direct" id="form-cout-direct"><input type="hidden" name="profits_perdus" id="form-profits-perdus"><input type="hidden" name="exposition_totale" id="form-exposition"><input type="hidden" name="niveau_risque" id="form-risque"><input type="hidden" name="salaire" id="form-salaire"><input type="hidden" name="duree" id="form-duree"><input type="hidden" name="quota" id="form-quota"><input type="hidden" name="taux_atteinte" id="form-taux"><input type="hidden" name="marge" id="form-marge"><div class="form-grid"><input type="text" id="prenom" name="prenom" placeholder="Prénom" required><input type="text" id="nom" name="nom" placeholder="Nom" required><input type="email" id="email" name="email" class="full" placeholder="Courriel professionnel" required><input type="tel" id="telephone" name="telephone" class="full" placeholder="ex: 514-555-1234" maxlength="14"></div><button class="btn btn-primary" id="lead-submit" type="submit" style="margin-top:14px" disabled>Recevoir mon analyse personnalisée</button><p class="privacy-note">Vos informations servent uniquement à vous transmettre votre analyse et, si pertinent, à vous proposer un échange de suivi.</p><div class="success-message" id="success-message">Merci. Votre demande a été reçue. Vous recevrez une lecture personnalisée de votre résultat.</div></form></div></div></div></div></section>
-<section class="strategic-section"><div class="container"><div class="strategic-box-wide"><h2>Avant de remplacer un représentant</h2><p>Avant de conclure rapidement qu’un représentant doit être remplacé, plusieurs entreprises cherchent d’abord à mieux comprendre :</p><ul><li>les causes réelles des difficultés ;</li><li>les besoins de coaching ;</li><li>les comportements commerciaux ;</li><li>le niveau de structure, de prospection et de suivi ;</li><li>ainsi que les coûts réels liés à un remplacement.</li></ul><p>Le Profil de Succès en Vente® peut ensuite aider à mieux identifier les forces, les faiblesses, les besoins de développement et les zones de risque d’un vendeur ou d’une équipe.</p><a href="/commande/" class="btn btn-primary">Évaluer un vendeur</a></div></div></section>
-<section class="methodo" id="methodologie"><div class="container"><div class="section-label" style="background:rgba(200,169,110,.15);border-color:rgba(200,169,110,.3)">Méthodologie</div><h2 class="section-title">Comment ces chiffres sont calculés</h2><div class="methodo-grid"><div class="methodo-card"><h4>Coûts salariaux</h4><p>Salaire brut proratisé sur la durée, plus une estimation des avantages sociaux et charges associées.</p></div><div class="methodo-card"><h4>Remplacement</h4><p>Temps de recrutement, entrevues, intégration, formation et gestion supplémentaire pendant la période d’ajustement.</p></div><div class="methodo-card"><h4>Ventes perdues</h4><p>Écart entre l’objectif attendu et le rendement réel, converti en profits nets selon la marge de l’entreprise.</p></div></div><p style="margin-top:28px;font-size:.82rem;color:rgba(255,255,255,.38);text-align:center">Estimations à titre indicatif. Les résultats réels varient selon l’industrie, le cycle de vente, le territoire et le niveau de soutien interne.</p></div></section>
-<section class="cta-final"><div class="container"><h2>Un vendeur sous-performant<br><em>ne coûte jamais seulement un salaire.</em></h2><p>Le chiffre est le point de départ. La vraie valeur est de comprendre où le risque se crée : recrutement, coaching, territoire, structure, prospection ou encadrement.</p><a class="btn btn-primary" href="/commande/">Évaluer un vendeur</a></div></section><footer><p>© 2026 <span>PSV Global</span> · Calculateur du coût d’un vendeur sous-performant · Outil d’aide à la décision pour gestionnaires, dirigeants et responsables RH.</p></footer>
-<script>
-const NTFY_OPEN_TOPIC="https://ntfy.sh/psv-calculateur-ouverture-2026";const NTFY_RISK_TOPIC="https://ntfy.sh/psv-calculateur-risque-eleve-2026";const NTFY_LEAD_TOPIC="https://ntfy.sh/psv-calculateur-lead-2026";let userInteracted=false;let currentData={};function fmtCA(n){return Math.round(n).toLocaleString('fr-CA')+' $'}function encodeNetlifyForm(form){const formData=new FormData(form);return new URLSearchParams(formData).toString()}function notifyNtfy(url,body,title,priority,tags,retry){retry=retry||0;fetch('/.netlify/functions/notify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url,body,title,priority,tags})}).catch(function(){if(retry<2&&url===NTFY_LEAD_TOPIC){setTimeout(function(){notifyNtfy(url,body,title,priority,tags,retry+1)},3000*(retry+1))}})}function getDiagnostic(expositionTotale,totalDirect,profitsPerdus,salaire,duree,ventes,taux,marge){let niveau,cls,diagnostic,recommandation;if(expositionTotale>=100000||duree>=9||taux<=25){niveau="Risque élevé";cls="risk-high";diagnostic="Votre scénario indique une exposition financière importante. Le risque ne vient pas seulement du salaire versé, mais aussi du temps perdu, des ventes manquées, du remplacement éventuel et du ralentissement commercial.";recommandation="Avant de remplacer un représentant ou d’augmenter la pression, il peut être pertinent de mieux comprendre si le problème vient des compétences, du territoire, du coaching, de la prospection ou de la structure de vente."}else if(expositionTotale>=50000||duree>=5||taux<=50){niveau="Risque modéré";cls="risk-mid";diagnostic="Votre exposition demeure significative. Un vendeur sous-performant peut rapidement absorber plusieurs mois de marge, même lorsque le salaire semble raisonnable.";recommandation="Votre situation gagnerait à être analysée plus finement avant une décision de remplacement. Une évaluation ciblée peut aider à distinguer un problème de compétences, de coaching ou de contexte commercial."}else{niveau="Risque contrôlé";cls="risk-low";diagnostic="Votre exposition semble plus limitée, mais une sous-performance en vente demeure coûteuse parce qu’elle ralentit la croissance et mobilise inutilement la direction.";recommandation="Une validation ciblée demeure pertinente si le représentant touche des clients stratégiques, un territoire important ou un marché difficile à développer."}if(taux<=30&&ventes>=250000){recommandation+=" Dans votre cas, le faible taux d’atteinte des objectifs est un signal particulièrement important."}else if(duree>=8){recommandation+=" Dans votre cas, le délai avant d’intervenir amplifie fortement le coût total."}else if(salaire>=100000){recommandation+=" Dans votre cas, le niveau salarial augmente fortement l’exposition dès les premiers mois."}return{niveau,cls,diagnostic,recommandation}}function setPendingState(){document.getElementById('calc-total').textContent='—';document.getElementById('calc-profits').textContent='—';document.getElementById('calc-profits-sub').textContent='Ajustez les glissières pour calculer les ventes perdues et la marge.';['bc1','bc2','bc3','bc4','bc5'].forEach(function(id){document.getElementById(id).textContent='—'});const riskEl=document.getElementById('risk-level');riskEl.className='risk-badge risk-mid';riskEl.textContent='Diagnostic en attente';document.getElementById('diagnostic-comment').textContent='Pour obtenir votre diagnostic instantané, ajustez les glissières afin qu’elles représentent votre réalité.';document.getElementById('diagnostic-reco').textContent='Les résultats et recommandations apparaîtront lorsque les données essentielles seront complétées.';currentData={ready:false,salaire:0,duree:0,ventes:0,taux:0,marge:0,totalDirect:0,profitsPerdus:0,expositionTotale:0,niveau:'Diagnostic en attente'};document.getElementById('lead-submit').disabled=true}
-function runCalc(){const salaire=parseInt(document.getElementById('salaire').value);const duree=parseInt(document.getElementById('duree').value);const ventes=parseInt(document.getElementById('ventes').value);const taux=parseInt(document.getElementById('taux').value);const marge=parseInt(document.getElementById('marge').value);document.getElementById('v-salaire').textContent=salaire.toLocaleString('fr-CA')+' $';document.getElementById('v-duree').textContent=duree+' mois';document.getElementById('v-ventes').textContent=ventes.toLocaleString('fr-CA')+' $';document.getElementById('v-taux').textContent=taux+' %';document.getElementById('v-marge').textContent=marge+' %';const hasMinimumData=salaire>0&&duree>0&&ventes>0&&marge>0;if(!userInteracted||!hasMinimumData){setPendingState();return}const salaireSansRetour=salaire*(duree/12);const avantages=salaireSansRetour*.16;const recrutement=salaire<60000?7000:salaire<100000?10000:18000;const formation=salaire<60000?6000:salaire<100000?9000:14000;const ventesPerdues=ventes*(duree/12)*(1-taux/100);const clientsPerdus=ventesPerdues*.18;const totalDirect=salaireSansRetour+avantages+recrutement+formation+clientsPerdus;const profitsPerdus=ventesPerdues*(marge/100);const expositionTotale=totalDirect+profitsPerdus;document.getElementById('bc1').textContent=fmtCA(salaireSansRetour);document.getElementById('bc2').textContent=fmtCA(avantages);document.getElementById('bc3').textContent=fmtCA(recrutement);document.getElementById('bc4').textContent=fmtCA(formation);document.getElementById('bc5').textContent=fmtCA(clientsPerdus);document.getElementById('calc-total').textContent=fmtCA(totalDirect);document.getElementById('calc-profits').textContent=fmtCA(profitsPerdus);document.getElementById('calc-profits-sub').textContent=fmtCA(ventesPerdues)+' de ventes perdues × '+marge+' % de marge';const diag=getDiagnostic(expositionTotale,totalDirect,profitsPerdus,salaire,duree,ventes,taux,marge);const riskEl=document.getElementById('risk-level');riskEl.className='risk-badge '+diag.cls;riskEl.textContent='Niveau de risque : '+diag.niveau;document.getElementById('diagnostic-comment').textContent=diag.diagnostic;document.getElementById('diagnostic-reco').textContent=diag.recommandation;currentData={ready:true,salaire,duree,ventes,taux,marge,totalDirect,profitsPerdus,expositionTotale,niveau:diag.niveau};document.getElementById('lead-submit').disabled=false;document.getElementById('form-cout-direct').value=Math.round(totalDirect);document.getElementById('form-profits-perdus').value=Math.round(profitsPerdus);document.getElementById('form-exposition').value=Math.round(expositionTotale);document.getElementById('form-risque').value=diag.niveau;document.getElementById('form-salaire').value=salaire;document.getElementById('form-duree').value=duree;document.getElementById('form-quota').value=ventes;document.getElementById('form-taux').value=taux;document.getElementById('form-marge').value=marge;if(diag.niveau==='Risque élevé'&&!window.__riskSent){window.__riskSent=true;notifyNtfy(NTFY_RISK_TOPIC,'Risque élevé calculateur PSV | Exposition totale : '+fmtCA(expositionTotale)+' | Coûts directs : '+fmtCA(totalDirect)+' | Profits perdus : '+fmtCA(profitsPerdus),'PSV — Risque élevé détecté','high','warning,chart')}}['salaire','duree','ventes','taux','marge'].forEach(function(id){document.getElementById(id).addEventListener('input',function(){userInteracted=true;if(!window.__openSent){window.__openSent=true;notifyNtfy(NTFY_OPEN_TOPIC,'Ouverture du calculateur PSV — coût vendeur sous-performant','PSV — Calculateur ouvert','default','eyes,chart')}runCalc()})});document.getElementById('telephone').addEventListener('input',function(e){let x=e.target.value.replace(/\D/g,'').substring(0,10);if(x.length>6)e.target.value=x.replace(/(\d{3})(\d{3})(\d{0,4})/,'$1-$2-$3');else if(x.length>3)e.target.value=x.replace(/(\d{3})(\d{0,3})/,'$1-$2');else e.target.value=x});document.getElementById('lead-form').addEventListener('submit',function(e){e.preventDefault();if(!currentData.ready)return;const form=this;const prenom=document.getElementById('prenom').value;const nom=document.getElementById('nom').value;const email=document.getElementById('email').value;const telephone=document.getElementById('telephone').value;fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:encodeNetlifyForm(form)}).then(function(){document.getElementById('success-message').style.display='block';document.getElementById('lead-submit').disabled=true;notifyNtfy(NTFY_LEAD_TOPIC,'Lead calculateur PSV : '+prenom+' '+nom+' | '+email+' | '+telephone+' | Exposition totale : '+fmtCA(currentData.expositionTotale)+' | Niveau : '+currentData.niveau,'PSV — Analyse personnalisée demandée','urgent','email,moneybag')}).catch(function(error){alert('Une erreur est survenue. Vous pouvez réessayer ou communiquer avec nous directement.');console.error(error)})});window.addEventListener('load',function(){setPendingState()});
-</script></body></html>
+
+<header>
+
+  <div class="logo">
+    PSV • Profil de Succès en Vente
+  </div>
+
+  <a href="https://psv-global-mai-2026.netlify.app/" class="cta">
+    RETOUR AU SITE PSV
+  </a>
+
+</header>
+
+<section class="hero">
+
+  <div class="tag">
+    PERFORMANCE • ÉQUIPE DE VENTE
+  </div>
+
+  <h1>
+    Combien vous coûte réellement un
+    <span>vendeur sous-performant ?</span>
+  </h1>
+
+  <p class="subtitle">
+    Évaluez l’impact financier d’un représentant qui n’atteint pas ses objectifs,
+    tarde à produire ou nécessite un remplacement.
+  </p>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>Ventes perdues</h3>
+      <p>
+        Estimez l’impact réel des occasions manquées et des comptes sous-exploités.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Temps avant intervention</h3>
+      <p>
+        Mesurez combien chaque mois supplémentaire augmente les pertes.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Coût de remplacement</h3>
+      <p>
+        Visualisez le coût complet d’un changement de représentant.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section">
+
+  <h2 class="section-title">
+    Les coûts invisibles sont souvent
+    <span>les plus élevés.</span>
+  </h2>
+
+  <div class="benefits">
+
+    <div class="benefit">
+      <strong>Clients moins suivis</strong>
+      <p>
+        Un vendeur sous-performant laisse souvent des comptes stratégiques sans attention.
+      </p>
+    </div>
+
+    <div class="benefit">
+      <strong>Territoire sous-exploité</strong>
+      <p>
+        Le problème n’est pas seulement le salaire. C’est le potentiel non réalisé.
+      </p>
+    </div>
+
+    <div class="benefit">
+      <strong>Décision plus rapide</strong>
+      <p>
+        Le calculateur vous aide à objectiver une situation avant qu’elle coûte encore plus cher.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="bottom-cta">
+    <a href="#calculateur">
+      COMMENCER LE DIAGNOSTIC
+    </a>
+  </div>
+
+</section>
+
+<footer>
+  © PSV – Profil de Succès en Vente
+</footer>
+
+</body>
+</html>
