@@ -6,708 +6,174 @@
   <title>PSV – Calculateur de performance des ventes</title>
 
   <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
-
-    body{
-      font-family:Arial, Helvetica, sans-serif;
-      background:#081d49;
-      color:white;
-      line-height:1.5;
-    }
-
-    header{
-      background:#0a235c;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      padding:22px 60px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-    }
-
-    .logo{
-      font-size:18px;
-      font-weight:700;
-      letter-spacing:.5px;
-    }
-
-    .cta{
-      background:#d2b16f;
-      color:#081d49;
-      text-decoration:none;
-      padding:14px 26px;
-      border-radius:6px;
-      font-weight:700;
-      transition:.2s;
-    }
-
-    .cta:hover{
-      opacity:.9;
-    }
-
-    .hero{
-      max-width:1200px;
-      margin:auto;
-      padding:90px 60px 70px;
-    }
-
-    .tag{
-      display:inline-block;
-      border:1px solid rgba(210,177,111,.4);
-      padding:10px 20px;
-      border-radius:40px;
-      color:#d2b16f;
-      font-size:14px;
-      letter-spacing:4px;
-      margin-bottom:30px;
-      font-weight:700;
-    }
-
-    h1{
-      font-size:68px;
-      line-height:1.05;
-      max-width:900px;
-      margin-bottom:30px;
-    }
-
-    h1 span{
-      color:#d2b16f;
-    }
-
-    .subtitle{
-      font-size:28px;
-      color:rgba(255,255,255,.75);
-      max-width:900px;
-      margin-bottom:50px;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-      gap:24px;
-      margin-top:40px;
-    }
-
-    .card{
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:18px;
-      padding:32px;
-    }
-
-    .card h3{
-      font-size:22px;
-      margin-bottom:18px;
-      color:#d2b16f;
-    }
-
-    .card p{
-      color:rgba(255,255,255,.78);
-      font-size:18px;
-    }
-
-    .section{
-      max-width:1200px;
-      margin:auto;
-      padding:20px 60px 100px;
-    }
-
-    .section-title{
-      font-size:52px;
-      line-height:1.1;
-      margin-bottom:50px;
-    }
-
-    .section-title span{
-      color:#d2b16f;
-    }
-
-    .benefits{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-      gap:24px;
-    }
-
-    .benefit{
-      background:#102b63;
-      border-radius:18px;
-      padding:30px;
-    }
-
-    .benefit strong{
-      display:block;
-      margin-bottom:12px;
-      color:#d2b16f;
-      font-size:22px;
-    }
-
-    .benefit p{
-      color:rgba(255,255,255,.78);
-      font-size:18px;
-    }
-
-    .bottom-cta{
-      text-align:center;
-      margin-top:80px;
-    }
-
-    .bottom-cta a{
-      display:inline-block;
-      background:#d2b16f;
-      color:#081d49;
-      text-decoration:none;
-      padding:18px 42px;
-      border-radius:10px;
-      font-size:20px;
-      font-weight:700;
-    }
-
-    .calculator-section{
-      max-width:1200px;
-      margin:auto;
-      padding:0 60px 110px;
-    }
-
-    .calculator-box{
-      background:#102b63;
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:22px;
-      padding:38px;
-    }
-
-    .calculator-title{
-      font-size:42px;
-      line-height:1.15;
-      margin-bottom:16px;
-    }
-
-    .calculator-title span{
-      color:#d2b16f;
-    }
-
-    .calculator-intro{
-      color:rgba(255,255,255,.75);
-      font-size:20px;
-      max-width:850px;
-      margin-bottom:34px;
-    }
-
-    .calculator-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:30px;
-      align-items:start;
-    }
-
-    .inputs,
-    .results{
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      border-radius:18px;
-      padding:30px;
-    }
-
-    .input-group{
-      margin-bottom:26px;
-    }
-
-    .input-header{
-      display:flex;
-      justify-content:space-between;
-      gap:20px;
-      align-items:center;
-      margin-bottom:10px;
-    }
-
-    .input-header label{
-      font-size:17px;
-      font-weight:700;
-      color:white;
-    }
-
-    .input-value{
-      color:#d2b16f;
-      font-weight:700;
-      white-space:nowrap;
-    }
-
-    input[type="range"]{
-      width:100%;
-      accent-color:#d2b16f;
-    }
-
-    .hint{
-      color:rgba(255,255,255,.55);
-      font-size:14px;
-      margin-top:6px;
-    }
-
-    .result-card{
-      background:#081d49;
-      border:1px solid rgba(210,177,111,.25);
-      border-radius:18px;
-      padding:28px;
-      text-align:center;
-      margin-bottom:20px;
-    }
-
-    .profit-card{
-      background:#1a2448;
-      border:2px solid rgba(210,177,111,.42);
-      box-shadow:0 18px 38px rgba(0,0,0,.18);
-    }
-
-    .result-label{
-      color:#d2b16f;
-      font-size:14px;
-      letter-spacing:3px;
-      font-weight:700;
-      margin-bottom:12px;
-    }
-
-    .result-amount{
-      color:#d2b16f;
-      font-size:54px;
-      line-height:1;
-      font-weight:800;
-    }
-
-    .result-note{
-      color:rgba(255,255,255,.70);
-      font-size:17px;
-      margin-top:12px;
-    }
-
-    .details{
-      display:grid;
-      gap:12px;
-      margin-top:20px;
-    }
-
-    .detail-row{
-      display:flex;
-      justify-content:space-between;
-      gap:20px;
-      background:rgba(255,255,255,.05);
-      padding:14px 16px;
-      border-radius:10px;
-      color:rgba(255,255,255,.80);
-    }
-
-    .detail-row strong{
-      color:#d2b16f;
-      white-space:nowrap;
-    }
-
-    .diagnostic{
-      background:rgba(210,177,111,.10);
-      border:1px solid rgba(210,177,111,.30);
-      border-radius:16px;
-      padding:22px;
-      margin-top:20px;
-      color:rgba(255,255,255,.82);
-      font-size:18px;
-    }
-
-    .lead-box{
-      background:#081d49;
-      border:1px solid rgba(210,177,111,.25);
-      border-radius:18px;
-      padding:26px;
-      margin-top:22px;
-    }
-
-    .lead-box h3{
-      color:#d2b16f;
-      margin-bottom:10px;
-      font-size:24px;
-    }
-
-    .lead-box p{
-      color:rgba(255,255,255,.72);
-      margin-bottom:18px;
-      font-size:16px;
-    }
-
-    .form-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-
-    .form-grid .full{
-      grid-column:1/-1;
-    }
-
-    .lead-box input{
-      width:100%;
-      padding:14px;
-      border-radius:8px;
-      border:1px solid rgba(255,255,255,.15);
-      background:rgba(255,255,255,.08);
-      color:white;
-      font-size:16px;
-    }
-
-    .lead-box input::placeholder{
-      color:rgba(255,255,255,.55);
-    }
-
-    .lead-box button{
-      width:100%;
-      margin-top:14px;
-      background:#d2b16f;
-      color:#081d49;
-      border:0;
-      padding:16px;
-      border-radius:10px;
-      font-size:17px;
-      font-weight:800;
-      cursor:pointer;
-    }
-
-    .lead-box button:disabled{
-      opacity:.55;
-      cursor:not-allowed;
-    }
-
-    .success{
-      display:none;
-      margin-top:14px;
-      color:#d2b16f;
-      font-weight:700;
-    }
-
-    .methodology{
-      margin-top:32px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(210,177,111,.22);
-      border-radius:18px;
-      padding:28px;
-    }
-
-    .methodology h3{
-      color:#d2b16f;
-      font-size:26px;
-      margin-bottom:12px;
-    }
-
-    .methodology p{
-      color:rgba(255,255,255,.74);
-      font-size:16px;
-      margin-bottom:16px;
-    }
-
-    .methodology-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:16px;
-      margin-top:20px;
-    }
-
-    .methodology-card{
-      background:rgba(255,255,255,.04);
-      border-radius:14px;
-      padding:18px;
-    }
-
-    .methodology-card strong{
-      display:block;
-      color:#d2b16f;
-      margin-bottom:8px;
-      font-size:17px;
-    }
-
-    .methodology-card span{
-      color:rgba(255,255,255,.72);
-      font-size:15px;
-    }
-
-    footer{
-      padding:40px;
-      text-align:center;
-      color:rgba(255,255,255,.45);
-      font-size:14px;
-    }
-
-    @media(max-width:900px){
-      .calculator-grid{
-        grid-template-columns:1fr;
-      }
-    }
-
-    @media(max-width:768px){
-      header{
-        padding:20px;
-      }
-
-      .hero,
-      .section,
-      .calculator-section{
-        padding-left:24px;
-        padding-right:24px;
-      }
-
-      .hero{
-        padding-top:60px;
-        padding-bottom:60px;
-      }
-
-      h1{
-        font-size:44px;
-      }
-
-      .subtitle{
-        font-size:22px;
-      }
-
-      .section-title{
-        font-size:38px;
-      }
-
-      .calculator-title{
-        font-size:34px;
-      }
-
-      .calculator-box{
-        padding:26px;
-      }
-
-      .form-grid{
-        grid-template-columns:1fr;
-      }
-    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:Arial, Helvetica, sans-serif;background:#081d49;color:white;line-height:1.5;}
+
+    header{background:#0a235c;border-bottom:1px solid rgba(255,255,255,.08);padding:22px 60px;display:flex;justify-content:space-between;align-items:center;}
+    .logo{font-size:18px;font-weight:700;letter-spacing:.5px;}
+    .cta{background:#d2b16f;color:#081d49;text-decoration:none;padding:14px 26px;border-radius:6px;font-weight:700;transition:.2s;}
+    .cta:hover{opacity:.9;}
+
+    .hero{max-width:1200px;margin:auto;padding:90px 60px 70px;}
+    .tag{display:inline-block;border:1px solid rgba(210,177,111,.4);padding:10px 20px;border-radius:40px;color:#d2b16f;font-size:14px;letter-spacing:4px;margin-bottom:30px;font-weight:700;}
+    h1{font-size:68px;line-height:1.05;max-width:900px;margin-bottom:30px;}
+    h1 span{color:#d2b16f;}
+    .subtitle{font-size:28px;color:rgba(255,255,255,.75);max-width:900px;margin-bottom:50px;}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:40px;}
+    .card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:32px;}
+    .card h3{font-size:22px;margin-bottom:18px;color:#d2b16f;}
+    .card p{color:rgba(255,255,255,.78);font-size:18px;}
+
+    .section{max-width:1200px;margin:auto;padding:20px 60px 100px;}
+    .section-title{font-size:52px;line-height:1.1;margin-bottom:50px;}
+    .section-title span{color:#d2b16f;}
+    .benefits{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
+    .benefit{background:#102b63;border-radius:18px;padding:30px;}
+    .benefit strong{display:block;margin-bottom:12px;color:#d2b16f;font-size:22px;}
+    .benefit p{color:rgba(255,255,255,.78);font-size:18px;}
+    .bottom-cta{text-align:center;margin-top:80px;}
+    .bottom-cta a{display:inline-block;background:#d2b16f;color:#081d49;text-decoration:none;padding:18px 42px;border-radius:10px;font-size:20px;font-weight:700;}
+
+    .calculator-section{max-width:1200px;margin:auto;padding:0 60px 110px;}
+    .calculator-box{background:#102b63;border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:38px;}
+    .calculator-title{font-size:42px;line-height:1.15;margin-bottom:16px;}
+    .calculator-title span{color:#d2b16f;}
+    .calculator-intro{color:rgba(255,255,255,.75);font-size:20px;max-width:850px;margin-bottom:34px;}
+    .calculator-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:start;}
+    .inputs,.results{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:30px;}
+
+    .input-group{margin-bottom:26px;}
+    .input-header{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:10px;}
+    .input-header label{font-size:17px;font-weight:700;color:white;}
+    .input-value{color:#d2b16f;font-weight:700;white-space:nowrap;}
+    input[type="range"]{width:100%;accent-color:#d2b16f;}
+    .hint{color:rgba(255,255,255,.55);font-size:14px;margin-top:6px;}
+
+    .visual-panel{margin-top:30px;background:rgba(255,255,255,.04);border:1px solid rgba(210,177,111,.22);border-radius:18px;padding:18px;}
+    .visual-panel img{width:100%;height:auto;max-height:520px;object-fit:cover;display:block;border-radius:14px;}
+    .visual-caption{margin-top:12px;color:rgba(255,255,255,.62);font-size:14px;line-height:1.5;}
+
+    .result-card{background:#081d49;border:1px solid rgba(210,177,111,.25);border-radius:18px;padding:28px;text-align:center;margin-bottom:20px;}
+    .profit-card{background:#1a2448;border:2px solid rgba(210,177,111,.42);box-shadow:0 18px 38px rgba(0,0,0,.18);}
+    .result-label{color:#d2b16f;font-size:14px;letter-spacing:3px;font-weight:700;margin-bottom:12px;}
+    .result-amount{color:#d2b16f;font-size:54px;line-height:1;font-weight:800;}
+    .result-note{color:rgba(255,255,255,.70);font-size:17px;margin-top:12px;}
+    .details{display:grid;gap:12px;margin-top:20px;}
+    .detail-row{display:flex;justify-content:space-between;gap:20px;background:rgba(255,255,255,.05);padding:14px 16px;border-radius:10px;color:rgba(255,255,255,.80);}
+    .detail-row strong{color:#d2b16f;white-space:nowrap;}
+    .diagnostic{background:rgba(210,177,111,.10);border:1px solid rgba(210,177,111,.30);border-radius:16px;padding:22px;margin-top:20px;color:rgba(255,255,255,.82);font-size:18px;}
+
+    .lead-box{background:#081d49;border:1px solid rgba(210,177,111,.25);border-radius:18px;padding:26px;margin-top:22px;}
+    .lead-box h3{color:#d2b16f;margin-bottom:10px;font-size:24px;}
+    .lead-box p{color:rgba(255,255,255,.72);margin-bottom:18px;font-size:16px;}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .form-grid .full{grid-column:1/-1;}
+    .lead-box input{width:100%;padding:14px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:white;font-size:16px;}
+    .lead-box input::placeholder{color:rgba(255,255,255,.55);}
+    .lead-box button{width:100%;margin-top:14px;background:#d2b16f;color:#081d49;border:0;padding:16px;border-radius:10px;font-size:17px;font-weight:800;cursor:pointer;}
+    .lead-box button:disabled{opacity:.55;cursor:not-allowed;}
+    .success{display:none;margin-top:14px;color:#d2b16f;font-weight:700;}
+
+    .methodology{margin-top:32px;background:rgba(255,255,255,.04);border:1px solid rgba(210,177,111,.22);border-radius:18px;padding:28px;}
+    .methodology h3{color:#d2b16f;font-size:26px;margin-bottom:12px;}
+    .methodology p{color:rgba(255,255,255,.74);font-size:16px;margin-bottom:16px;}
+    .methodology-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:20px;}
+    .methodology-card{background:rgba(255,255,255,.04);border-radius:14px;padding:18px;}
+    .methodology-card strong{display:block;color:#d2b16f;margin-bottom:8px;font-size:17px;}
+    .methodology-card span{color:rgba(255,255,255,.72);font-size:15px;}
+
+    footer{padding:40px;text-align:center;color:rgba(255,255,255,.45);font-size:14px;}
+
+    @media(max-width:900px){.calculator-grid{grid-template-columns:1fr;}}
+    @media(max-width:768px){header{padding:20px;}.hero,.section,.calculator-section{padding-left:24px;padding-right:24px;}.hero{padding-top:60px;padding-bottom:60px;}h1{font-size:44px;}.subtitle{font-size:22px;}.section-title{font-size:38px;}.calculator-title{font-size:34px;}.calculator-box{padding:26px;}.form-grid{grid-template-columns:1fr;}}
   </style>
 </head>
 
 <body>
-
 <header>
-  <div class="logo">
-    PSV • Profil de Succès en Vente
-  </div>
-
-  <a href="https://psv-global-mai-2026.netlify.app/" class="cta">
-    RETOUR AU SITE PSV
-  </a>
+  <div class="logo">PSV • Profil de Succès en Vente</div>
+  <a href="https://psv-global-mai-2026.netlify.app/" class="cta">RETOUR AU SITE PSV</a>
 </header>
 
 <section class="hero">
-  <div class="tag">
-    PERFORMANCE • ÉQUIPE DE VENTE
-  </div>
-
-  <h1>
-    Combien vous coûte réellement un
-    <span>vendeur sous-performant ?</span>
-  </h1>
-
-  <p class="subtitle">
-    Évaluez l’impact financier d’un représentant qui n’atteint pas ses objectifs,
-    tarde à produire ou nécessite un remplacement.
-  </p>
-
+  <div class="tag">PERFORMANCE • ÉQUIPE DE VENTE</div>
+  <h1>Combien vous coûte réellement un <span>vendeur sous-performant ?</span></h1>
+  <p class="subtitle">Évaluez l’impact financier d’un représentant qui n’atteint pas ses objectifs, tarde à produire ou nécessite un remplacement.</p>
   <div class="grid">
-    <div class="card">
-      <h3>Ventes perdues</h3>
-      <p>Estimez l’impact réel des occasions manquées et des comptes sous-exploités.</p>
-    </div>
-
-    <div class="card">
-      <h3>Temps avant intervention</h3>
-      <p>Mesurez combien chaque mois supplémentaire augmente les pertes.</p>
-    </div>
-
-    <div class="card">
-      <h3>Coût de remplacement</h3>
-      <p>Visualisez le coût complet d’un changement de représentant.</p>
-    </div>
+    <div class="card"><h3>Ventes perdues</h3><p>Estimez l’impact réel des occasions manquées et des comptes sous-exploités.</p></div>
+    <div class="card"><h3>Temps avant intervention</h3><p>Mesurez combien chaque mois supplémentaire augmente les pertes.</p></div>
+    <div class="card"><h3>Coût de remplacement</h3><p>Visualisez le coût complet d’un changement de représentant.</p></div>
   </div>
 </section>
 
 <section class="section">
-  <h2 class="section-title">
-    Les coûts invisibles sont souvent
-    <span>les plus élevés.</span>
-  </h2>
-
+  <h2 class="section-title">Les coûts invisibles sont souvent <span>les plus élevés.</span></h2>
   <div class="benefits">
-    <div class="benefit">
-      <strong>Clients moins suivis</strong>
-      <p>Un vendeur sous-performant laisse souvent des comptes stratégiques sans attention.</p>
-    </div>
-
-    <div class="benefit">
-      <strong>Territoire sous-exploité</strong>
-      <p>Le problème n’est pas seulement le salaire. C’est le potentiel non réalisé.</p>
-    </div>
-
-    <div class="benefit">
-      <strong>Décision plus rapide</strong>
-      <p>Le calculateur vous aide à objectiver une situation avant qu’elle coûte encore plus cher.</p>
-    </div>
+    <div class="benefit"><strong>Clients moins suivis</strong><p>Un vendeur sous-performant laisse souvent des comptes stratégiques sans attention.</p></div>
+    <div class="benefit"><strong>Territoire sous-exploité</strong><p>Le problème n’est pas seulement le salaire. C’est le potentiel non réalisé.</p></div>
+    <div class="benefit"><strong>Décision plus rapide</strong><p>Le calculateur vous aide à objectiver une situation avant qu’elle coûte encore plus cher.</p></div>
   </div>
-
-  <div class="bottom-cta">
-    <a href="#calculateur">COMMENCER LE DIAGNOSTIC</a>
-  </div>
+  <div class="bottom-cta"><a href="#calculateur">COMMENCER LE DIAGNOSTIC</a></div>
 </section>
 
 <section class="calculator-section" id="calculateur">
   <div class="calculator-box">
-    <h2 class="calculator-title">
-      Estimez maintenant votre
-      <span>exposition financière.</span>
-    </h2>
-
-    <p class="calculator-intro">
-      Ajustez les paramètres ci-dessous. Le calculateur démarre à zéro et affiche le coût estimé dès que vous entrez vos données.
-    </p>
+    <h2 class="calculator-title">Estimez maintenant votre <span>exposition financière.</span></h2>
+    <p class="calculator-intro">Ajustez les paramètres ci-dessous. Le calculateur démarre à zéro et affiche le coût estimé dès que vous entrez vos données.</p>
 
     <div class="calculator-grid">
       <div class="inputs">
-        <div class="input-group">
-          <div class="input-header">
-            <label for="salary">Salaire annuel du représentant</label>
-            <div class="input-value" id="salaryValue">0 $</div>
-          </div>
-          <input type="range" id="salary" min="0" max="200000" step="5000" value="0">
-          <div class="hint">Salaire de base annuel, sans commissions.</div>
-        </div>
-
-        <div class="input-group">
-          <div class="input-header">
-            <label for="months">Temps avant intervention ou remplacement</label>
-            <div class="input-value" id="monthsValue">0 mois</div>
-          </div>
-          <input type="range" id="months" min="0" max="18" step="1" value="0">
-          <div class="hint">Nombre de mois avant de corriger, remplacer ou intervenir.</div>
-        </div>
-
-        <div class="input-group">
-          <div class="input-header">
-            <label for="sales">Objectif de ventes annuel</label>
-            <div class="input-value" id="salesValue">0 $</div>
-          </div>
-          <input type="range" id="sales" min="0" max="1500000" step="25000" value="0">
-          <div class="hint">Objectif annuel attendu pour ce poste ou ce territoire.</div>
-        </div>
-
-        <div class="input-group">
-          <div class="input-header">
-            <label for="performance">% des objectifs réellement atteints</label>
-            <div class="input-value" id="performanceValue">0 %</div>
-          </div>
-          <input type="range" id="performance" min="0" max="100" step="5" value="0">
-          <div class="hint">Pourcentage réel des objectifs atteints.</div>
-        </div>
-
-        <div class="input-group">
-          <div class="input-header">
-            <label for="margin">Marge bénéficiaire nette</label>
-            <div class="input-value" id="marginValue">0 %</div>
-          </div>
-          <input type="range" id="margin" min="0" max="50" step="1" value="0">
-          <div class="hint">Marge nette utilisée pour estimer les profits perdus.</div>
-        </div>
+        <div class="input-group"><div class="input-header"><label for="salary">Salaire annuel du représentant</label><div class="input-value" id="salaryValue">0 $</div></div><input type="range" id="salary" min="0" max="200000" step="5000" value="0"><div class="hint">Salaire de base annuel, sans commissions.</div></div>
+        <div class="input-group"><div class="input-header"><label for="months">Temps avant intervention ou remplacement</label><div class="input-value" id="monthsValue">0 mois</div></div><input type="range" id="months" min="0" max="18" step="1" value="0"><div class="hint">Nombre de mois avant de corriger, remplacer ou intervenir.</div></div>
+        <div class="input-group"><div class="input-header"><label for="sales">Objectif de ventes annuel</label><div class="input-value" id="salesValue">0 $</div></div><input type="range" id="sales" min="0" max="1500000" step="25000" value="0"><div class="hint">Objectif annuel attendu pour ce poste ou ce territoire.</div></div>
+        <div class="input-group"><div class="input-header"><label for="performance">% des objectifs réellement atteints</label><div class="input-value" id="performanceValue">0 %</div></div><input type="range" id="performance" min="0" max="100" step="5" value="0"><div class="hint">Pourcentage réel des objectifs atteints.</div></div>
+        <div class="input-group"><div class="input-header"><label for="margin">Marge bénéficiaire nette</label><div class="input-value" id="marginValue">0 %</div></div><input type="range" id="margin" min="0" max="50" step="1" value="0"><div class="hint">Marge nette utilisée pour estimer les profits perdus.</div></div>
       </div>
 
       <div class="results">
-        <div class="result-card">
-          <div class="result-label">COÛT ESTIMÉ</div>
-          <div class="result-amount" id="result">—</div>
-          <div class="result-note" id="diagnostic">Ajustez les paramètres pour obtenir votre diagnostic.</div>
-        </div>
-
-        <div class="result-card profit-card">
-          <div class="result-label">PROFITS NETS ÉVAPORÉS</div>
-          <div class="result-amount" id="lostProfitBox">—</div>
-          <div class="result-note" id="lostProfitNote">Ajustez les paramètres pour calculer les profits perdus.</div>
-        </div>
-
+        <div class="result-card"><div class="result-label">COÛT ESTIMÉ</div><div class="result-amount" id="result">—</div><div class="result-note" id="diagnostic">Ajustez les paramètres pour obtenir votre diagnostic.</div></div>
+        <div class="result-card profit-card"><div class="result-label">PROFITS NETS ÉVAPORÉS</div><div class="result-amount" id="lostProfitBox">—</div><div class="result-note" id="lostProfitNote">Ajustez les paramètres pour calculer les profits perdus.</div></div>
         <div class="details">
-          <div class="detail-row">
-            <span>Coûts directs estimés</span>
-            <strong id="directCost">—</strong>
-          </div>
-          <div class="detail-row">
-            <span>Ventes perdues estimées</span>
-            <strong id="lostSales">—</strong>
-          </div>
-          <div class="detail-row">
-            <span>Profits nets évaporés</span>
-            <strong id="lostProfit">—</strong>
-          </div>
-          <div class="detail-row">
-            <span>Remplacement et redémarrage</span>
-            <strong id="replacementCost">—</strong>
-          </div>
+          <div class="detail-row"><span>Coûts directs estimés</span><strong id="directCost">—</strong></div>
+          <div class="detail-row"><span>Ventes perdues estimées</span><strong id="lostSales">—</strong></div>
+          <div class="detail-row"><span>Profits nets évaporés</span><strong id="lostProfit">—</strong></div>
+          <div class="detail-row"><span>Remplacement et redémarrage</span><strong id="replacementCost">—</strong></div>
         </div>
-
-        <div class="diagnostic" id="riskText">
-          Le diagnostic apparaîtra lorsque les données essentielles seront complétées.
-        </div>
-
+        <div class="diagnostic" id="riskText">Le diagnostic apparaîtra lorsque les données essentielles seront complétées.</div>
         <div class="lead-box">
           <h3>Recevoir une analyse personnalisée</h3>
           <p>Laissez vos coordonnées pour recevoir une lecture plus complète de votre résultat.</p>
-
           <form id="leadForm" name="psv-calculateur-lead" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-            <input type="hidden" name="form-name" value="psv-calculateur-lead">
-            <input type="hidden" name="bot-field">
-            <input type="hidden" name="cout_estime" id="formTotal">
-            <input type="hidden" name="cout_direct" id="formDirect">
-            <input type="hidden" name="ventes_perdues" id="formLostSales">
-            <input type="hidden" name="profits_perdus" id="formLostProfit">
-            <input type="hidden" name="niveau_risque" id="formRisk">
-
-            <div class="form-grid">
-              <input type="text" id="firstName" name="prenom" placeholder="Prénom" required>
-              <input type="text" id="lastName" name="nom" placeholder="Nom" required>
-              <input type="email" id="email" name="email" class="full" placeholder="Courriel professionnel" required>
-              <input type="tel" id="phone" name="telephone" class="full" placeholder="Téléphone">
-            </div>
-
-            <button id="leadButton" type="submit" disabled>Recevoir mon analyse</button>
-            <div class="success" id="successMessage">Merci. Votre demande a été reçue.</div>
+            <input type="hidden" name="form-name" value="psv-calculateur-lead"><input type="hidden" name="bot-field">
+            <input type="hidden" name="cout_estime" id="formTotal"><input type="hidden" name="cout_direct" id="formDirect"><input type="hidden" name="ventes_perdues" id="formLostSales"><input type="hidden" name="profits_perdus" id="formLostProfit"><input type="hidden" name="niveau_risque" id="formRisk">
+            <div class="form-grid"><input type="text" id="firstName" name="prenom" placeholder="Prénom" required><input type="text" id="lastName" name="nom" placeholder="Nom" required><input type="email" id="email" name="email" class="full" placeholder="Courriel professionnel" required><input type="tel" id="phone" name="telephone" class="full" placeholder="Téléphone"></div>
+            <button id="leadButton" type="submit" disabled>Recevoir mon analyse</button><div class="success" id="successMessage">Merci. Votre demande a été reçue.</div>
           </form>
         </div>
       </div>
     </div>
 
+    <div class="visual-panel">
+      <img src="a_wide_cinematic_office_scene_at_night_low_light.png" alt="Gestionnaire préoccupé devant un tableau de performance des ventes">
+      <div class="visual-caption">Illustration : les ventes perdues, les profits évaporés et le coût d’un remplacement deviennent visibles lorsqu’on les chiffre.</div>
+    </div>
+
     <div class="methodology">
       <h3>Méthodologie</h3>
-      <p>
-        Ce calculateur est inspiré de constats publiés par Harvard Business Review sur les coûts visibles et invisibles associés aux erreurs d’embauche, à la sous-performance et au remplacement d’employés. Les résultats demeurent des estimations indicatives et doivent être adaptés à votre réalité.
-      </p>
+      <p>Ce calculateur est inspiré de constats publiés par Harvard Business Review sur les coûts visibles et invisibles associés aux erreurs d’embauche, à la sous-performance et au remplacement d’employés. Les résultats demeurent des estimations indicatives et doivent être adaptés à votre réalité.</p>
       <div class="methodology-grid">
-        <div class="methodology-card">
-          <strong>Coûts directs</strong>
-          <span>Salaire proratisé selon la durée, avantages sociaux estimés, remplacement et formation.</span>
-        </div>
-        <div class="methodology-card">
-          <strong>Ventes perdues</strong>
-          <span>Objectif annuel × durée avant intervention × écart de performance.</span>
-        </div>
-        <div class="methodology-card">
-          <strong>Profits nets évaporés</strong>
-          <span>Ventes perdues × marge bénéficiaire nette.</span>
-        </div>
-        <div class="methodology-card">
-          <strong>Coût total estimé</strong>
-          <span>Coûts directs + profits nets évaporés.</span>
-        </div>
+        <div class="methodology-card"><strong>Coûts directs</strong><span>Salaire proratisé selon la durée, avantages sociaux estimés, remplacement et formation.</span></div>
+        <div class="methodology-card"><strong>Ventes perdues</strong><span>Objectif annuel × durée avant intervention × écart de performance.</span></div>
+        <div class="methodology-card"><strong>Profits nets évaporés</strong><span>Ventes perdues × marge bénéficiaire nette.</span></div>
+        <div class="methodology-card"><strong>Coût total estimé</strong><span>Coûts directs + profits nets évaporés.</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<footer>
-  © PSV – Profil de Succès en Vente
-</footer>
+<footer>© PSV – Profil de Succès en Vente</footer>
 
 <script>
   const NTFY_OPEN = 'https://ntfy.sh/psv-calculateur-ouverture-2026';
@@ -718,26 +184,15 @@
   let riskSent = false;
   let currentResult = null;
 
-  function money(value){
-    return Math.round(value).toLocaleString('fr-CA') + ' $';
+  function byId(id){
+    const el = document.getElementById(id);
+    if(!el){throw new Error('Élément introuvable : #' + id);}
+    return el;
   }
 
-  function sendNtfy(url, message){
-    fetch(url, {
-      method: 'POST',
-      body: message
-    }).catch(function(){});
-  }
-
-  function getInputs(){
-    return {
-      salary: parseInt(document.getElementById('salary').value, 10),
-      months: parseInt(document.getElementById('months').value, 10),
-      sales: parseInt(document.getElementById('sales').value, 10),
-      performance: parseInt(document.getElementById('performance').value, 10),
-      margin: parseInt(document.getElementById('margin').value, 10)
-    };
-  }
+  function money(value){return Math.round(value).toLocaleString('fr-CA') + ' $';}
+  function sendNtfy(url, message){fetch(url,{method:'POST',body:message}).catch(function(){});}
+  function getInputs(){return {salary:parseInt(byId('salary').value,10),months:parseInt(byId('months').value,10),sales:parseInt(byId('sales').value,10),performance:parseInt(byId('performance').value,10),margin:parseInt(byId('margin').value,10)};}
 
   function calculateValues(inputs){
     const salaryCost = inputs.salary * (inputs.months / 12);
@@ -749,162 +204,92 @@
     const opportunityImpact = lostSales * 0.18;
     const directCost = salaryCost + benefits + replacement + training + opportunityImpact;
     const total = directCost + lostProfit;
-
     let risk = 'Risque contrôlé';
     let diagnostic = 'Votre exposition semble plus contrôlée.';
-
-    if(total >= 100000 || inputs.months >= 9 || inputs.performance <= 25){
-      risk = 'Risque élevé';
-      diagnostic = 'Votre exposition financière est élevée. Avant de remplacer ou d’embaucher, il serait pertinent de mieux comprendre les causes réelles de la sous-performance.';
-    } else if(total >= 50000 || inputs.months >= 5 || inputs.performance <= 50){
-      risk = 'Risque modéré';
-      diagnostic = 'Votre situation mérite une analyse plus approfondie avant une décision de coaching, remplacement ou embauche.';
-    }
-
-    return {
-      salaryCost,
-      benefits,
-      replacement,
-      training,
-      lostSales,
-      lostProfit,
-      opportunityImpact,
-      directCost,
-      total,
-      risk,
-      diagnostic
-    };
+    if(total >= 100000 || inputs.months >= 9 || inputs.performance <= 25){risk='Risque élevé';diagnostic='Votre exposition financière est élevée. Avant de remplacer ou d’embaucher, il serait pertinent de mieux comprendre les causes réelles de la sous-performance.';}
+    else if(total >= 50000 || inputs.months >= 5 || inputs.performance <= 50){risk='Risque modéré';diagnostic='Votre situation mérite une analyse plus approfondie avant une décision de coaching, remplacement ou embauche.';}
+    return {salaryCost,benefits,replacement,training,lostSales,lostProfit,opportunityImpact,directCost,total,risk,diagnostic};
   }
 
   function resetResults(){
-    document.getElementById('result').textContent = '—';
-    document.getElementById('diagnostic').textContent = 'Ajustez les paramètres pour obtenir votre diagnostic.';
-    document.getElementById('lostProfitBox').textContent = '—';
-    document.getElementById('lostProfitNote').textContent = 'Ajustez les paramètres pour calculer les profits perdus.';
-    document.getElementById('directCost').textContent = '—';
-    document.getElementById('lostSales').textContent = '—';
-    document.getElementById('lostProfit').textContent = '—';
-    document.getElementById('replacementCost').textContent = '—';
-    document.getElementById('riskText').textContent = 'Le diagnostic apparaîtra lorsque les données essentielles seront complétées.';
-    document.getElementById('leadButton').disabled = true;
-    currentResult = null;
+    byId('result').textContent='—';
+    byId('diagnostic').textContent='Ajustez les paramètres pour obtenir votre diagnostic.';
+    byId('lostProfitBox').textContent='—';
+    byId('lostProfitNote').textContent='Ajustez les paramètres pour calculer les profits perdus.';
+    byId('directCost').textContent='—';
+    byId('lostSales').textContent='—';
+    byId('lostProfit').textContent='—';
+    byId('replacementCost').textContent='—';
+    byId('riskText').textContent='Le diagnostic apparaîtra lorsque les données essentielles seront complétées.';
+    byId('leadButton').disabled=true;
+    currentResult=null;
   }
 
   function calculate(){
     const inputs = getInputs();
-
-    document.getElementById('salaryValue').textContent = money(inputs.salary);
-    document.getElementById('monthsValue').textContent = inputs.months + ' mois';
-    document.getElementById('salesValue').textContent = money(inputs.sales);
-    document.getElementById('performanceValue').textContent = inputs.performance + ' %';
-    document.getElementById('marginValue').textContent = inputs.margin + ' %';
-
-    if(!openSent){
-      openSent = true;
-      sendNtfy(NTFY_OPEN, '👀 Ouverture du calculateur PSV — première interaction');
-    }
-
+    byId('salaryValue').textContent=money(inputs.salary);
+    byId('monthsValue').textContent=inputs.months + ' mois';
+    byId('salesValue').textContent=money(inputs.sales);
+    byId('performanceValue').textContent=inputs.performance + ' %';
+    byId('marginValue').textContent=inputs.margin + ' %';
+    if(!openSent){openSent=true;sendNtfy(NTFY_OPEN,'👀 Ouverture du calculateur PSV — première interaction');}
     const hasData = inputs.salary > 0 && inputs.months > 0 && inputs.sales > 0 && inputs.margin > 0;
-
-    if(!hasData){
-      resetResults();
-      return;
-    }
-
+    if(!hasData){resetResults();return;}
     const values = calculateValues(inputs);
-
-    document.getElementById('result').textContent = money(values.total);
-    document.getElementById('diagnostic').textContent = values.diagnostic;
-    document.getElementById('lostProfitBox').textContent = money(values.lostProfit);
-    document.getElementById('lostProfitNote').textContent = money(values.lostSales) + ' de ventes perdues × ' + inputs.margin + ' % de marge';
-    document.getElementById('directCost').textContent = money(values.directCost);
-    document.getElementById('lostSales').textContent = money(values.lostSales);
-    document.getElementById('lostProfit').textContent = money(values.lostProfit);
-    document.getElementById('replacementCost').textContent = money(values.replacement + values.training);
-    document.getElementById('riskText').textContent = values.risk + ' — ' + values.diagnostic;
-
-    document.getElementById('formTotal').value = money(values.total);
-    document.getElementById('formDirect').value = money(values.directCost);
-    document.getElementById('formLostSales').value = money(values.lostSales);
-    document.getElementById('formLostProfit').value = money(values.lostProfit);
-    document.getElementById('formRisk').value = values.risk;
-
-    document.getElementById('leadButton').disabled = false;
-
-    currentResult = {
-      salary: inputs.salary,
-      months: inputs.months,
-      sales: inputs.sales,
-      performance: inputs.performance,
-      margin: inputs.margin,
-      total: values.total,
-      directCost: values.directCost,
-      lostSales: values.lostSales,
-      lostProfit: values.lostProfit,
-      risk: values.risk
-    };
-
+    byId('result').textContent=money(values.total);
+    byId('diagnostic').textContent=values.diagnostic;
+    byId('lostProfitBox').textContent=money(values.lostProfit);
+    byId('lostProfitNote').textContent=money(values.lostSales) + ' de ventes perdues × ' + inputs.margin + ' % de marge';
+    byId('directCost').textContent=money(values.directCost);
+    byId('lostSales').textContent=money(values.lostSales);
+    byId('lostProfit').textContent=money(values.lostProfit);
+    byId('replacementCost').textContent=money(values.replacement + values.training);
+    byId('riskText').textContent=values.risk + ' — ' + values.diagnostic;
+    byId('formTotal').value=money(values.total);
+    byId('formDirect').value=money(values.directCost);
+    byId('formLostSales').value=money(values.lostSales);
+    byId('formLostProfit').value=money(values.lostProfit);
+    byId('formRisk').value=values.risk;
+    byId('leadButton').disabled=false;
+    currentResult={salary:inputs.salary,months:inputs.months,sales:inputs.sales,performance:inputs.performance,margin:inputs.margin,total:values.total,directCost:values.directCost,lostSales:values.lostSales,lostProfit:values.lostProfit,risk:values.risk};
     if(values.risk === 'Risque élevé' && !riskSent){
-      riskSent = true;
-      const riskMessage = `⚠️ Risque élevé détecté — Calculateur PSV
-
-Coût estimé : ${money(values.total)}
-Profits nets évaporés : ${money(values.lostProfit)}
-Ventes perdues : ${money(values.lostSales)}
-Durée : ${inputs.months} mois
-Performance : ${inputs.performance} %`;
-      sendNtfy(NTFY_RISK, riskMessage);
+      riskSent=true;
+      const riskMessage = `⚠️ Risque élevé détecté — Calculateur PSV\n\nCoût estimé : ${money(values.total)}\nProfits nets évaporés : ${money(values.lostProfit)}\nVentes perdues : ${money(values.lostSales)}\nDurée : ${inputs.months} mois\nPerformance : ${inputs.performance} %`;
+      sendNtfy(NTFY_RISK,riskMessage);
     }
   }
 
-  ['salary','months','sales','performance','margin'].forEach(function(id){
-    document.getElementById(id).addEventListener('input', calculate);
-  });
-
-  document.getElementById('leadForm').addEventListener('submit', function(e){
-    e.preventDefault();
-
-    if(!currentResult){
-      return;
-    }
-
-    const firstName = document.getElementById('firstName').value.trim();
-    const lastName = document.getElementById('lastName').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-
-    const leadMessage = `🔥 Lead calculateur PSV
-
-Nom : ${firstName} ${lastName}
-Courriel : ${email}
-Téléphone : ${phone || 'Non fourni'}
-
-Risque : ${currentResult.risk}
-Coût estimé : ${money(currentResult.total)}
-Profits nets évaporés : ${money(currentResult.lostProfit)}
-Ventes perdues : ${money(currentResult.lostSales)}`;
-
-    sendNtfy(NTFY_LEAD, leadMessage);
-
-    document.getElementById('successMessage').style.display = 'block';
-    document.getElementById('leadButton').disabled = true;
-    document.getElementById('leadButton').textContent = 'Demande reçue';
-  });
+  function init(){
+    ['salary','months','sales','performance','margin'].forEach(function(id){byId(id).addEventListener('input',calculate);});
+    byId('leadForm').addEventListener('submit',function(e){
+      e.preventDefault();
+      if(!currentResult){return;}
+      const firstName=byId('firstName').value.trim();
+      const lastName=byId('lastName').value.trim();
+      const email=byId('email').value.trim();
+      const phone=byId('phone').value.trim();
+      const leadMessage = `🔥 Lead calculateur PSV\n\nNom : ${firstName} ${lastName}\nCourriel : ${email}\nTéléphone : ${phone || 'Non fourni'}\n\nRisque : ${currentResult.risk}\nCoût estimé : ${money(currentResult.total)}\nProfits nets évaporés : ${money(currentResult.lostProfit)}\nVentes perdues : ${money(currentResult.lostSales)}`;
+      sendNtfy(NTFY_LEAD,leadMessage);
+      byId('successMessage').style.display='block';
+      byId('leadButton').disabled=true;
+      byId('leadButton').textContent='Demande reçue';
+    });
+    runSelfTests();
+    resetResults();
+  }
 
   function runSelfTests(){
-    const zero = calculateValues({salary:0, months:0, sales:0, performance:0, margin:0});
-    console.assert(Number.isFinite(zero.total), 'Test 1 échoué : le total zéro doit être un nombre fini.');
-
-    const sample = calculateValues({salary:100000, months:6, sales:1000000, performance:50, margin:10});
-    console.assert(sample.total > 0, 'Test 2 échoué : le total doit être supérieur à zéro.');
-    console.assert(sample.lostSales === 250000, 'Test 3 échoué : ventes perdues attendues = 250000.');
-    console.assert(sample.lostProfit === 25000, 'Test 4 échoué : profits perdus attendus = 25000.');
-    console.assert(sample.risk === 'Risque élevé' || sample.risk === 'Risque modéré' || sample.risk === 'Risque contrôlé', 'Test 5 échoué : niveau de risque invalide.');
+    const requiredIds=['salary','months','sales','performance','margin','result','diagnostic','lostProfitBox','lostProfitNote','directCost','lostSales','lostProfit','replacementCost','riskText','leadButton','leadForm'];
+    requiredIds.forEach(function(id){console.assert(document.getElementById(id), 'Test DOM échoué : #' + id + ' manquant.');});
+    const zero=calculateValues({salary:0,months:0,sales:0,performance:0,margin:0});
+    console.assert(Number.isFinite(zero.total),'Test 1 échoué : total zéro doit être fini.');
+    const sample=calculateValues({salary:100000,months:6,sales:1000000,performance:50,margin:10});
+    console.assert(sample.total > 0,'Test 2 échoué : total supérieur à zéro.');
+    console.assert(sample.lostSales === 250000,'Test 3 échoué : ventes perdues = 250000.');
+    console.assert(sample.lostProfit === 25000,'Test 4 échoué : profits perdus = 25000.');
   }
 
-  runSelfTests();
-  resetResults();
+  document.addEventListener('DOMContentLoaded',init);
 </script>
-
 </body>
 </html>
