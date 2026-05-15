@@ -139,6 +139,7 @@
       <div class="results">
         <div class="result-card"><div class="result-label">COÛT ESTIMÉ</div><div class="result-amount" id="result">—</div><div class="result-note" id="diagnostic">Ajustez les paramètres pour obtenir votre diagnostic.</div></div>
         <div class="result-card profit-card"><div class="result-label">PROFITS NETS ÉVAPORÉS</div><div class="result-amount" id="lostProfitBox">—</div><div class="result-note" id="lostProfitNote">Ajustez les paramètres pour calculer les profits perdus.</div></div>
+        <div class="result-card" style="background:rgba(200,169,110,.12);border-color:rgba(200,169,110,.5)"><div class="result-label" style="color:#d2b16f">VOTRE RATIO PSV</div><div class="result-amount" id="ratioPSV" style="font-size:38px">—</div><div class="result-note" id="ratioNote" style="color:rgba(255,255,255,.75)">Le coût estimé de votre situation vs une évaluation PSV à 125 $</div><div id="ratioCTA" style="display:none;margin-top:16px"><a href="https://psv-global-mai-2026.netlify.app/commande/" style="display:inline-block;background:#d2b16f;color:#081d49;padding:12px 24px;border-radius:6px;font-weight:800;font-size:.85rem;letter-spacing:.04em;text-transform:uppercase;text-decoration:none">Évaluer mon représentant</a></div></div>
         <div class="details">
           <div class="detail-row"><span>Coûts directs estimés</span><strong id="directCost">—</strong></div>
           <div class="detail-row"><span>Ventes perdues estimées</span><strong id="lostSales">—</strong></div>
@@ -215,6 +216,9 @@
     byId('result').textContent='—';
     byId('diagnostic').textContent='Ajustez les paramètres pour obtenir votre diagnostic.';
     byId('lostProfitBox').textContent='—';
+    byId('ratioPSV').textContent='—';
+    byId('ratioNote').textContent='Le coût estimé de votre situation vs une évaluation PSV à 125 $';
+    byId('ratioCTA').style.display='none';
     byId('lostProfitNote').textContent='Ajustez les paramètres pour calculer les profits perdus.';
     byId('directCost').textContent='—';
     byId('lostSales').textContent='—';
@@ -239,6 +243,18 @@
     byId('result').textContent=money(values.total);
     byId('diagnostic').textContent=values.diagnostic;
     byId('lostProfitBox').textContent=money(values.lostProfit);
+    // Ratio PSV
+    const PSV_PRICE = 125;
+    const ratio = Math.round(values.total / PSV_PRICE);
+    if(ratio > 1){
+      byId('ratioPSV').textContent = ratio + '×';
+      byId('ratioNote').textContent = 'Votre coût estimé représente ' + ratio + ' fois le prix d\'une évaluation PSV à 125 $';
+      byId('ratioCTA').style.display = 'block';
+    } else {
+      byId('ratioPSV').textContent = '—';
+      byId('ratioNote').textContent = 'Le coût estimé de votre situation vs une évaluation PSV à 125 $';
+      byId('ratioCTA').style.display = 'none';
+    }
     byId('lostProfitNote').textContent=money(values.lostSales) + ' de ventes perdues × ' + inputs.margin + ' % de marge';
     byId('directCost').textContent=money(values.directCost);
     byId('lostSales').textContent=money(values.lostSales);
