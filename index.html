@@ -191,6 +191,7 @@
 
   let openSent = false;
   let riskSent = false;
+  let riskTimer = null;
   let currentResult = null;
 
   function byId(id){
@@ -246,7 +247,11 @@
     byId('marginValue').textContent=inputs.margin + ' %';
     if(!openSent){openSent=true;sendNtfy(NTFY_OPEN,'👀 Ouverture du calculateur PSV — première interaction');}
     const hasData = inputs.salary > 0 && inputs.months > 0 && inputs.sales > 0 && inputs.margin > 0;
-    if(!hasData){resetResults();return;}
+    if(!hasData){
+      if(riskTimer){clearTimeout(riskTimer);riskTimer=null;}
+      resetResults();
+      return;
+    }
     const values = calculateValues(inputs);
     byId('result').textContent=money(values.total);
     byId('diagnostic').textContent=values.diagnostic;
@@ -276,10 +281,20 @@
     byId('formRisk').value=values.risk;
     byId('leadButton').disabled=false;
     currentResult={salary:inputs.salary,months:inputs.months,sales:inputs.sales,performance:inputs.performance,margin:inputs.margin,total:values.total,directCost:values.directCost,lostSales:values.lostSales,lostProfit:values.lostProfit,risk:values.risk};
-    if(values.risk === 'Risque élevé' && !riskSent){
-      riskSent=true;
-      const riskMessage = `⚠️ Risque élevé détecté — Calculateur PSV\n\nCoût estimé : ${money(values.total)}\nProfits nets évaporés : ${money(values.lostProfit)}\nVentes perdues : ${money(values.lostSales)}\nDurée : ${inputs.months} mois\nPerformance : ${inputs.performance} %`;
-      sendNtfy(NTFY_RISK,riskMessage);
+    if(!riskSent){
+      if(riskTimer){clearTimeout(riskTimer);riskTimer=null;}
+      if(values.risk === 'Risque élevé'){
+        riskTimer=setTimeout(function(){
+          const currentInputs = getInputs();
+          const currentHasData = currentInputs.salary > 0 && currentInputs.months > 0 && currentInputs.sales > 0 && currentInputs.margin > 0;
+          if(!currentHasData){return;}
+          const currentValues = calculateValues(currentInputs);
+          if(currentValues.risk !== 'Risque élevé' || riskSent){return;}
+          riskSent=true;
+          const riskMessage = `⚠️ Risque élevé détecté — Calculateur PSV\n\nCoût estimé : ${money(currentValues.total)}\nProfits nets évaporés : ${money(currentValues.lostProfit)}\nVentes perdues : ${money(currentValues.lostSales)}\nDurée : ${currentInputs.months} mois\nPerformance : ${currentInputs.performance} %`;
+          sendNtfy(NTFY_RISK,riskMessage);
+        },5000);
+      }
     }
   }
 
